@@ -11,11 +11,13 @@ define(['jsonld'], function(jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, config, brCredentialService) {
+function factory(brAlertService, config) {
   return {
     restrict: 'E',
     scope: {
-      credential: '=brCredential'
+      credential: '=brCredential',
+      groups: '=brGroups',
+      showActions: '=brShowActions'
     },
     templateUrl: requirejs.toUrl('bedrock-angular-credential/credential.html'),
     link: Link
@@ -38,19 +40,22 @@ function factory(brAlertService, config, brCredentialService) {
         return;
       }
       model.credential = credential;
+      model.groups = credential.sysLayout || scope.groups;
 
       // filter out any objects with potential actions
       model.actionables = [];
-      jsonld.promises.frame(credential, actionFrame)
-        .then(function(framed) {
-          model.actionables = framed['@graph'];
-        })
-        .catch(function(err) {
-          brAlertService.add('error', err, {scope: scope});
-        })
-        .then(function() {
-          scope.$apply();
-        });
+      if(scope.showActions) {
+        jsonld.promises.frame(credential, actionFrame)
+          .then(function(framed) {
+            model.actionables = framed['@graph'];
+          })
+          .catch(function(err) {
+            brAlertService.add('error', err, {scope: scope});
+          })
+          .then(function() {
+            scope.$apply();
+          });
+      }
     }, true);
   }
 }
