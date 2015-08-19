@@ -36,60 +36,54 @@ function factory(brAlertService, brCredentialLibraryService, config) {
       'schema:potentialAction': {}
     };
 
+    var updates = [];
+
     scope.$watch('credential', function(credential) {
       if(!credential) {
         return;
       }
-      // TODO: use bindToController in directive definition above instead
-      model.credential = credential;
-
-      // FIXME: running async code here can cause race conditions such that
-      // the model isn't in sync with itself
-      model.groups = [];
-      model.actionables = [];
-      Promise.all([_updateGroups(), _updateActionables()]).then(function() {
-        scope.$apply();
-      });
+      // use an update queue to ensure model is kept in sync with
+      // the latest change
+      updates.push(Promise.all([
+        _getGroups(credential, scope.groups, scope.library),
+        _getActionables(credential, scope.showActions)])
+        .then(function(results) {
+          updates.pop();
+          if(updates.length === 0) {
+            model.credential = credential;
+            model.groups = results[0];
+            model.actionables = results[1];
+            scope.$apply();
+          }
+        }));
     }, true);
 
-    function _updateGroups() {
-      var groups = model.credential.sysLayout || scope.groups;
-      var promise;
-      if(scope.library || !groups) {
-        promise = brCredentialLibraryService.getLibrary(scope.library)
+    function _getGroups(credential, groups, library) {
+      groups = credential.sysLayout || groups;
+      if(library || !groups) {
+        return brCredentialLibraryService.getLibrary(library)
           .then(function(library) {
             // pick out groups that match credential types
-            var types = _.flatten(jsonld.getValues(model.credential, 'type'));
+            var types = _.flatten(jsonld.getValues(credential, 'type'));
             return _.values(_.pick(library.groups, types));
           }).catch(function(err) {
             brAlertService.add('error', err, {scope: scope});
           });
-      } else {
-        promise = Promise.resolve(model.credential.sysLayout || scope.groups);
       }
-      return promise.then(function(groups) {
-        model.groups = groups;
-      });
+      return Promise.resolve(credential.sysLayout || groups);
     }
 
-    function _updateActionables() {
-      var promise;
-
+    function _getActionables(credential, showActions) {
       // filter out any objects with potential actions
-      if(scope.showActions) {
-        promise = jsonld.promises.frame(model.credential, actionFrame)
+      if(showActions) {
+        return jsonld.promises.frame(credential, actionFrame)
           .then(function(framed) {
             return framed['@graph'];
           }).catch(function(err) {
             brAlertService.add('error', err, {scope: scope});
           });
-      } else {
-        promise = Promise.resolve([]);
       }
-
-      return promise.then(function(actionables) {
-        model.actionables = actionables;
-      });
+      return Promise.resolve([]);
     }
   }
 }
