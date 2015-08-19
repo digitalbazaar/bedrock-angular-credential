@@ -32,12 +32,14 @@ function factory(brFormLibraryService, config) {
 
     // load vocabs specified in config
     var cfg = config.data['bedrock-angular-credential'];
-    var libraries = (cfg && cfg.libraries);
-    if(name === 'default' && !(name in libraries)) {
-      vocabs = [service.DEFAULT_VOCAB];
+    var libraries = (cfg && cfg.libraries) || {};
+    var vocabs;
+    if(!(name in libraries)) {
+      vocabs = (name === 'default') ? [service.DEFAULT_VOCAB] : [];
+    } else {
+      vocabs = libraries[name].vocabs || [];
     }
-    var vocabs = (libraries && libraries[name]) || [];
-    Promise.all(vocabs.map(function(vocab) {
+    return Promise.all(vocabs.map(function(vocab) {
       if(typeof vocab === 'string') {
         return brFormLibraryService.collection.get(vocab);
       }
