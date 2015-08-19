@@ -39,6 +39,7 @@ function factory(brAlertService, config) {
       if(!credential) {
         return;
       }
+      // TODO: use bindToController in directive definition above instead
       model.credential = credential;
       model.groups = credential.sysLayout || scope.groups;
 
