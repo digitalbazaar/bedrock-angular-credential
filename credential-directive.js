@@ -16,8 +16,8 @@ function factory(brAlertService, config) {
     restrict: 'E',
     scope: {
       credential: '=brCredential',
-      groups: '=brGroups',
-      showActions: '=brShowActions'
+      groups: '=?brGroups',
+      showActions: '=?brShowActions'
     },
     templateUrl: requirejs.toUrl('bedrock-angular-credential/credential.html'),
     link: Link
