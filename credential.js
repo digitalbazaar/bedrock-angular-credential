@@ -8,10 +8,12 @@
  */
 define([
   'angular',
-  './credential-directive'
+  './credential-directive',
+  './credential-library-service'
 ], function(
   angular,
-  credentialDirective
+  credentialDirective,
+  credentialLibraryService
 ) {
 
 'use strict';
@@ -19,6 +21,7 @@ define([
 var module = angular.module('bedrock.credential', []);
 
 module.directive(credentialDirective);
+module.service(credentialLibraryService);
 
 return module.name;
 
