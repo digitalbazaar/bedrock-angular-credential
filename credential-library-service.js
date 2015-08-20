@@ -60,7 +60,7 @@ function factory(brFormLibraryService, config) {
       "label": "Verified Email",
       "layout": [{
         "property": {
-          "id": "claim",
+          "id": "http://w3id.org/credentials#claim",
           "type": "Property",
           "label": "Claim",
           "range": "URL",
@@ -72,7 +72,7 @@ function factory(brFormLibraryService, config) {
           "collapsed": true,
           "layout": [{
             "property": {
-              "id": "email",
+              "id": "schema:email",
               "type": "Property",
               "label": "Email Address",
               "range": "String"
@@ -84,7 +84,7 @@ function factory(brFormLibraryService, config) {
           "id": "issued",
           "type": "Property",
           "label": "Date Issued",
-          "range": "String"
+          "range": "Date"
         }
       }]
     }]

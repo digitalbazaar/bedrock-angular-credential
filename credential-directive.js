@@ -11,7 +11,8 @@ define(['jsonld', 'underscore'], function(jsonld, _) {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brCredentialLibraryService, config) {
+function factory(
+  brAlertService, brCredentialLibraryService, brFormLibraryService, config) {
   return {
     restrict: 'E',
     scope: {
@@ -42,21 +43,34 @@ function factory(brAlertService, brCredentialLibraryService, config) {
       if(!credential) {
         return;
       }
+      // FIXME: fix actual contexts and remove this injection
+      if(credential['@context'] === 'https://w3id.org/credentials/v1') {
+        credential['@context'] = [
+          'https://w3id.org/identity/v1',
+          'https://w3id.org/credentials/v1'];
+      }
       // use an update queue to ensure model is kept in sync with
       // the latest change
       updates.push(Promise.all([
+        _compact(credential),
         _getGroups(credential, scope.groups, scope.library),
         _getActionables(credential, scope.showActions)])
         .then(function(results) {
           updates.pop();
           if(updates.length === 0) {
             model.credential = credential;
-            model.groups = results[0];
-            model.actionables = results[1];
+            model.compacted = results[0];
+            model.groups = results[1];
+            model.actionables = results[2];
             scope.$apply();
           }
         }));
     }, true);
+
+    // TODO: compaction should be done in br-form
+    function _compact(credential) {
+      return jsonld.promises.compact(credential, brFormLibraryService._CONTEXT);
+    }
 
     function _getGroups(credential, groups, library) {
       groups = credential.sysLayout || groups;
