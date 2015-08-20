@@ -43,12 +43,6 @@ function factory(
       if(!credential) {
         return;
       }
-      // FIXME: fix actual contexts and remove this injection
-      if(credential['@context'] === 'https://w3id.org/credentials/v1') {
-        credential['@context'] = [
-          'https://w3id.org/identity/v1',
-          'https://w3id.org/credentials/v1'];
-      }
       // use an update queue to ensure model is kept in sync with
       // the latest change
       updates.push(_compact(credential).then(function(compacted) {
