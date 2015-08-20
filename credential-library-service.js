@@ -41,14 +41,10 @@ function factory(brFormLibraryService, config) {
     }
     return Promise.all(vocabs.map(function(vocab) {
       if(typeof vocab === 'string') {
-        return brFormLibraryService.collection.get(vocab);
-      }
-      return Promise.resolve(vocab);
-    })).then(function(vocabs) {
-      return Promise.all(vocabs.map(function(vocab) {
         return library.load(vocab);
-      }));
-    }).then(function() {
+      }
+      return library.load(vocab.id, {vocab: vocab});
+    })).then(function() {
       libraries[name] = library;
       return library;
     });
