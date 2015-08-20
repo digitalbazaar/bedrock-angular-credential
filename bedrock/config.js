@@ -16,7 +16,12 @@ module.exports = function(bedrock) {
     // protractor.params.config.onPrepare.push(prepare);
   }
 
-  bedrock.config.views.vars['bedrock-angular-credential'] = {
-    libraries: {}
-  };
+  // FIXME: overrides config set elsewhere
+  //bedrock.config.views.vars['bedrock-angular-credential'] = {
+  //  libraries: {}
+  //};
+  bedrock.config.views.vars['bedrock-angular-credential'] =
+    bedrock.config.views.vars['bedrock-angular-credential'] || {};
+  bedrock.config.views.vars['bedrock-angular-credential'].libraries =
+    bedrock.config.views.vars['bedrock-angular-credential'].libraries || {};
 };
