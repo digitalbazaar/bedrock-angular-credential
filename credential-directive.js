@@ -51,20 +51,22 @@ function factory(
       }
       // use an update queue to ensure model is kept in sync with
       // the latest change
-      updates.push(Promise.all([
-        _compact(credential),
-        _getGroups(credential, scope.groups, scope.library),
-        _getActionables(credential, scope.showActions)])
-        .then(function(results) {
+      updates.push(_compact(credential).then(function(compacted) {
+        return Promise.all([
+          _getGroups(compacted, scope.groups, scope.library),
+          // TODO: use compacted credential consistently?
+          _getActionables(credential, scope.showActions)
+        ]).then(function(results) {
           updates.pop();
           if(updates.length === 0) {
             model.credential = credential;
-            model.compacted = results[0];
-            model.groups = results[1];
-            model.actionables = results[2];
+            model.compacted = compacted;
+            model.groups = results[0];
+            model.actionables = results[1];
             scope.$apply();
           }
-        }));
+        });
+      }));
     }, true);
 
     // TODO: compaction should be done in br-form
