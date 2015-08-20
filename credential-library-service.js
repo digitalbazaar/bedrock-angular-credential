@@ -24,7 +24,7 @@ function factory(brFormLibraryService, config) {
 
     // return cached library
     if(name in service.libraries) {
-      return new Promise.resolve(service.libraries[name]);
+      return Promise.resolve(service.libraries[name]);
     }
 
     // create library
@@ -45,7 +45,7 @@ function factory(brFormLibraryService, config) {
       }
       return library.load(vocab.id, {vocab: vocab});
     })).then(function() {
-      libraries[name] = library;
+      service.libraries[name] = library;
       return library;
     });
   };
