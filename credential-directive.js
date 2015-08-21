@@ -21,7 +21,8 @@ function factory(
       library: '=?brLibrary',
       showActions: '=?brShowActions'
     },
-    templateUrl: requirejs.toUrl('bedrock-angular-credential/credential.html'),
+    templateUrl: requirejs.toUrl(
+      'bedrock-angular-credential/credential.html'),
     link: Link
   };
 

@@ -20,8 +20,12 @@ module.exports = function(bedrock) {
   //bedrock.config.views.vars['bedrock-angular-credential'] = {
   //  libraries: {}
   //};
-  bedrock.config.views.vars['bedrock-angular-credential'] =
-    bedrock.config.views.vars['bedrock-angular-credential'] || {};
-  bedrock.config.views.vars['bedrock-angular-credential'].libraries =
-    bedrock.config.views.vars['bedrock-angular-credential'].libraries || {};
+  // export bedrock-credentials-rest location for UI
+  var vars = bedrock.config.views.vars;
+  vars['bedrock-angular-credential'] =
+    vars['bedrock-angular-credential'] || {};
+  vars['bedrock-angular-credential'].libraries =
+    vars['bedrock-angular-credential'].libraries || {};
+  vars['bedrock-angular-credential'].credentialsBasePath =
+    bedrock.config['credentials-rest'].basePath || '';
 };
