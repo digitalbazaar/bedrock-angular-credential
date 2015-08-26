@@ -26,6 +26,10 @@ module.exports = function(bedrock) {
     vars['bedrock-angular-credential'] || {};
   vars['bedrock-angular-credential'].libraries =
     vars['bedrock-angular-credential'].libraries || {};
-  vars['bedrock-angular-credential'].credentialsBasePath =
-    bedrock.config['credentials-rest'].basePath || '';
+  if('credentials-rest' in bedrock.config) {
+    vars['bedrock-angular-credential'].credentialsBasePath =
+      bedrock.config['credentials-rest'].basePath || '';
+  } else {
+    vars['bedrock-angular-credential'].credentialsBasePath = '';
+  }
 };
