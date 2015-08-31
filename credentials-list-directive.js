@@ -11,7 +11,7 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brIdentityService, brCredentialService) {
+function factory(brAlertService, brCredentialService) {
   return {
     restrict: 'E',
     scope: {
@@ -25,7 +25,7 @@ function factory(brAlertService, brIdentityService, brCredentialService) {
   function Link(scope) {
     var model = scope.model = {};
     model.modals = {};
-    model.identity = brIdentityService.identity;
+    model.identity = brCredentialService.identity;
     model.state = {
       credentials: brCredentialService.state.claimed
     };
