@@ -60,7 +60,7 @@ function factory(brFormLibraryService, config) {
       "label": "Verified Email",
       "layout": [{
         "property": {
-          "id": "http://w3id.org/credentials#claim",
+          "id": "https://w3id.org/credentials#claim",
           "type": "Property",
           "label": "Claim",
           "range": "URL",
