@@ -34,21 +34,21 @@ function factory(
     service.collections.claimed = new brResourceService.Collection({
       url:
         '/credentials?filter=claimed&recipient=' +
-        encodeURIComponent(brIdentityService.identity.id)
+        encodeURIComponent(service.identity.id)
     });
 
     // credentials issued by current identity
     service.collections.issued = new brResourceService.Collection({
       url:
         '/credentials?issuer=' +
-        encodeURIComponent(brIdentityService.identity.id)
+        encodeURIComponent(service.identity.id)
     });
 
     // unclaimed credentials where current identity is the recipient
     service.collections.unclaimed = new brResourceService.Collection({
       url:
         '/credentials?filter=unclaimed&recipient=' +
-        encodeURIComponent(brIdentityService.identity.id)
+        encodeURIComponent(service.identity.id)
     });
 
     service.credentials = {
