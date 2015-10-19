@@ -22,7 +22,7 @@ function factory($injector, brAlertService, config) {
     var service;
 
     $scope.$watch(function() {
-      return $scope.serviceName;
+      return self.serviceName;
     }, function(serviceName) {
       if($injector.has(serviceName)) {
         service = $injector.get(serviceName);
