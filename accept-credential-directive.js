@@ -11,7 +11,7 @@ define(['node-uuid'], function(uuid) {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, config) {
+function factory($injector, brAlertService, config) {
   function Ctrl($scope) {
     var self = this;
     self.aioBaseUri = config.data['authorization-io'].baseUri;
@@ -19,6 +19,15 @@ function factory(brAlertService, config) {
     self.display.login = true;
     self.display.credential = false;
     self.display.acknowledgement = false;
+    var service;
+
+    $scope.$watch(function() {
+      return $scope.serviceName;
+    }, function(serviceName) {
+      if($injector.has(serviceName)) {
+        service = $injector.get(serviceName);
+      }
+    });
 
     self.login = function() {
       navigator.credentials.get({
@@ -63,7 +72,7 @@ function factory(brAlertService, config) {
       // TODO: use `brCredentialService` to get credential using
       // authorization via identity credential
       var recipient = self.identity.credential[0]['@graph'].claim.id;
-      var mockCredential = {};
+      var mockCredential = service.get(recipient);
 
       // FIXME: this would normally lookup a credential in the database but
       // we're using a newly created mock credential now.
@@ -83,7 +92,8 @@ function factory(brAlertService, config) {
   return {
     restrict: 'E',
     scope: {
-      callback: '&brAcceptCredentialCallback'
+      callback: '&brAcceptCredentialCallback',
+      serviceName: '@brAcceptCredentialService'
     },
     controller: Ctrl,
     controllerAs: 'ctrl',

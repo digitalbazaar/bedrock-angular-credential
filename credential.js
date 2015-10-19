@@ -16,8 +16,7 @@ define([
   './credentials-list-directive',
   './edit-credential-modal-directive',
   './export-credential-modal-directive',
-  './accept-credential-directive',
-  './accept-credential-service'
+  './accept-credential-directive'
 ], function(
   angular,
   credentialController,
@@ -28,8 +27,7 @@ define([
   credentialsListDirective,
   editCredentialModalDirective,
   exportCredentialModalDirective,
-  acceptCredentialDirective,
-  acceptCredentialService
+  acceptCredentialDirective
 ) {
 
 'use strict';
@@ -48,7 +46,6 @@ module.controller(credentialController);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
-module.service(acceptCredentialService);
 module.directive(credentialsListDirective);
 module.directive(editCredentialModalDirective);
 module.directive(exportCredentialModalDirective);
