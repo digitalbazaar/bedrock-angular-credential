@@ -57,10 +57,9 @@ function factory($injector, brAlertService, config) {
       return navigator.credentials.store(self.credential, {
         agentUrl: self.aioBaseUri + '/agent?op=store&route=params'
       }).then(function(identity) {
-        self.storedCredential = identity;
-        $scope.callback(null, identity);
+        self.callback(null, identity);
       }).catch(function(err) {
-        $scope.callback(err);
+        self.callback(err);
       });
     };
 
@@ -92,7 +91,7 @@ function factory($injector, brAlertService, config) {
   return {
     restrict: 'E',
     scope: {
-      callback: '&brAcceptCredentialCallback',
+      callback: '=brAcceptCredentialCallback',
       serviceName: '@brAcceptCredentialService'
     },
     controller: Ctrl,
