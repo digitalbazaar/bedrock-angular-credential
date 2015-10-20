@@ -45,7 +45,10 @@ function factory($injector, brAlertService, config) {
         }
         // TODO: POST identity to verification service; should this be handled
         // via callback or assume presence of brConsumerService?
-        self.identity = identity;
+        return service.verify(identity);
+      }).then(function(verifyResult) {
+        // FIXME: the return value of service.verify is unknown
+        self.identity = verifyResult;
         _showCredential();
       }).catch(function(err) {
         brAlertService.add('error', err);
@@ -71,7 +74,9 @@ function factory($injector, brAlertService, config) {
     function _showCredential() {
       // TODO: use `brCredentialService` to get credential using
       // authorization via identity credential
-      var recipient = self.identity.credential[0]['@graph'].claim.id;
+      // var recipient = self.identity.credential[0]['@graph'].claim.id;
+      // FIXME: proper value for recipient
+      var recipient = 'something';
       service.get(recipient)
         .then(function(response) {
           self.credential = response;
