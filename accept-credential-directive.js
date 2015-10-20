@@ -15,6 +15,7 @@ function factory($injector, brAlertService, config) {
   function Ctrl($scope) {
     var self = this;
     self.aioBaseUri = config.data['authorization-io'].baseUri;
+    self.credential = null;
     self.display = {};
     self.display.login = true;
     self.display.credential = false;
@@ -71,13 +72,16 @@ function factory($injector, brAlertService, config) {
       // TODO: use `brCredentialService` to get credential using
       // authorization via identity credential
       var recipient = self.identity.credential[0]['@graph'].claim.id;
-      var mockCredential = service.get(recipient);
+      service.get(recipient)
+        .then(function(response) {
+          self.credential = response;
+          _display('credential');
+        }).catch(function(err) {
+          brAlertService.add('error', err);
+        }).then(function() {
+          $scope.$apply();
+        });
 
-      // FIXME: this would normally lookup a credential in the database but
-      // we're using a newly created mock credential now.
-      self.credential = mockCredential;
-      self.credentialId = mockCredential.id;
-      _display('credential');
     }
 
     function _display(showProperty) {
