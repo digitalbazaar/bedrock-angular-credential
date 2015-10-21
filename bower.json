@@ -8,7 +8,7 @@
     "bedrock-angular": "^1.0.0",
     "bedrock-angular-alert": "^1.0.0",
     "bedrock-angular-form": "^1.0.0",
-    "bedrock-angular-resource": "digitalbazaar/bedrock-angular-resource#master",
+    "bedrock-angular-resource": "^1.0.1",
     "underscore": "~1.7.0"
   }
 }
