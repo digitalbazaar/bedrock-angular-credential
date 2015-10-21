@@ -61,9 +61,9 @@ function factory($injector, brAlertService, config) {
       return navigator.credentials.store(self.credential, {
         agentUrl: self.aioBaseUri + '/agent?op=store&route=params'
       }).then(function(identity) {
-        self.callback(null, identity);
+        self.callback()(null, identity);
       }).catch(function(err) {
-        self.callback(err);
+        self.callback()(err);
       });
     };
 
@@ -74,9 +74,9 @@ function factory($injector, brAlertService, config) {
     function _showCredential() {
       // TODO: use `brCredentialService` to get credential using
       // authorization via identity credential
-      // var recipient = self.identity.credential[0]['@graph'].claim.id;
+      var recipient = self.identity.credential[0]['@graph'].claim.id;
       // FIXME: proper value for recipient
-      var recipient = 'something';
+      // var recipient = 'something';
       service.get(recipient)
         .then(function(response) {
           self.credential = response;
@@ -100,7 +100,7 @@ function factory($injector, brAlertService, config) {
   return {
     restrict: 'E',
     scope: {
-      callback: '=brAcceptCredentialCallback',
+      callback: '&brAcceptCredentialCallback',
       serviceName: '@brAcceptCredentialService'
     },
     controller: Ctrl,
