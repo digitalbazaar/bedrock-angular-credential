@@ -15,6 +15,7 @@ define([
   './credential-routes',
   './credential-service',
   './credentials-list-directive',
+  './default-credential-displayer-directive',
   './edit-credential-modal-directive',
   './export-credential-modal-directive'
 ], function(
@@ -26,6 +27,7 @@ define([
   routes,
   credentialService,
   credentialsListDirective,
+  defaultCredentialDisplayerDirective,
   editCredentialModalDirective,
   exportCredentialModalDirective
 ) {
@@ -48,6 +50,7 @@ module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
 module.directive(credentialsListDirective);
+module.directive(defaultCredentialDisplayerDirective);
 module.directive(editCredentialModalDirective);
 module.directive(exportCredentialModalDirective);
 
@@ -55,6 +58,17 @@ module.directive(exportCredentialModalDirective);
 module.config(function($routeProvider) {
   angular.forEach(routes, function(route) {
     $routeProvider.when(route.path, route.options);
+  });
+});
+
+/* @ngInject */
+module.run(function(brCredentialService) {
+  brCredentialService.registerDisplayer({
+    id: 'default',
+    accept: {
+      '*': {}
+    },
+    directive: 'br-default-credential-displayer'
   });
 });
 

@@ -5,7 +5,7 @@
  *
  * @author Dave Longley
  */
-define([], function() {
+define(['jsonld', 'underscore'], function(jsonld, _) {
 
 'use strict';
 
@@ -15,6 +15,11 @@ function factory(
   var service = {};
   // storage for different collections
   service.collections = {};
+  // map from Credential type to array of displayers
+  service.displayers = {
+    byId: {},
+    byType: {}
+  };
 
   service.identity = null;
   if($injector.has('brIdentityService')) {
@@ -24,30 +29,33 @@ function factory(
   // FIXME: public access allowed so may not have an identity to use
   // FIXME: if collection tries to use url, should login and set this
 
+  var credentialsBasePath =
+    config.data['bedrock-angular-credential'].credentialsBasePath;
+
   // generic collection of credentials
   service.collection = new brResourceService.Collection({
-    url: '/' + config.data['bedrock-angular-credential'].credentialsBasePath
+    url: credentialsBasePath
   });
 
   if(service.identity) {
     // credentials claimed by current identity
     service.collections.claimed = new brResourceService.Collection({
       url:
-        '/credentials?filter=claimed&recipient=' +
+        credentialsBasePath + '?filter=claimed&recipient=' +
         encodeURIComponent(service.identity.id)
     });
 
     // credentials issued by current identity
     service.collections.issued = new brResourceService.Collection({
       url:
-        '/credentials?issuer=' +
+        credentialsBasePath + '?issuer=' +
         encodeURIComponent(service.identity.id)
     });
 
     // unclaimed credentials where current identity is the recipient
     service.collections.unclaimed = new brResourceService.Collection({
       url:
-        '/credentials?filter=unclaimed&recipient=' +
+        credentialsBasePath + '?filter=unclaimed&recipient=' +
         encodeURIComponent(service.identity.id)
     });
 
@@ -67,6 +75,31 @@ function factory(
     brRefreshService.register(service.collections.claimed);
     brRefreshService.register(service.collections.unclaimed);
   }
+
+  service.registerDisplayer = function(displayer) {
+    service.displayers.byId[displayer.id] = displayer;
+    _.each(displayer.accept || {}, function(options, type) {
+      service.displayers.byType[type] = displayer;
+    });
+  };
+
+  service.getDisplayer = function(credential, name) {
+    // FIXME: compact or frame credential?
+    if(name) {
+      return service.displayers.byId[name];
+    }
+    var types = jsonld.getValues(credential, 'type');
+    // TODO: register and find displayers using priority
+    // Possibly use displayer 'q' param like Accept?
+    // May want to be able to override
+    types = _.reject(types, function(type) { return type === 'Credential'; });
+    // FIXME: can only handle single type
+    if(types.length !== 1) {
+      console.warn('Displaying using first type:', types);
+    }
+    return service.displayers.byType[types[0]] ||
+      service.displayers.byId['default'];
+  };
 
   // expose service to scope
   $rootScope.app.services.credential = service;

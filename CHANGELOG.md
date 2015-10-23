@@ -4,5 +4,7 @@
 
 ## Added
 - Add basic credential display using form library and sysLayout.
+- Support for custom display directives based on Credential type.
+- Default credential displayer using `br-form`.
 
 [Unreleased]: https://github.com/digitalbazaar/bedrock-angular-resource/compare/0.0.0...HEAD

@@ -12,7 +12,9 @@ define(['jsonld', 'underscore'], function(jsonld, _) {
 
 /* @ngInject */
 function factory(
-  brAlertService, brCredentialLibraryService, brFormLibraryService, config) {
+  $compile, brAlertService, brCredentialService, brCredentialLibraryService,
+  brFormLibraryService,
+  config) {
   return {
     restrict: 'E',
     scope: {
@@ -26,11 +28,12 @@ function factory(
     link: Link
   };
 
-  function Link(scope) {
+  function Link(scope, element) {
     var model = scope.model = {};
     model.modals = {};
 
     model.credential = null;
+    model.credentialView = null;
     model.actionables = [];
 
     var actionFrame = {
@@ -54,10 +57,20 @@ function factory(
         ]).then(function(results) {
           updates.pop();
           if(updates.length === 0) {
+            var displayer = brCredentialService.getDisplayer(credential);
+            if(model.credentialView) {
+              model.credentialView.remove();
+            }
             model.credential = credential;
             model.compacted = compacted;
             model.groups = results[0];
             model.actionables = results[1];
+            // FIXME: handle text template
+            var template = '<' + displayer.directive +
+              ' br-model="model"' +
+              ' br-options="{editable: false}"></' + displayer.directive + '>'
+            model.credentialView = $compile(template)(scope);
+            element.prepend(model.credentialView);
             scope.$apply();
           }
         });
