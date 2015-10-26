@@ -8,11 +8,18 @@
  */
 define([], function() {
 
-return [{
-  path: window.data['bedrock-angular-credential'].credentialsBasePath,
+var base = window.data['bedrock-angular-credential'].credentialsBasePath;
+return [/*{
+  path: base,
   options: {
     title: 'Credentials',
     templateUrl: requirejs.toUrl('bedrock-angular-credential/credentials.html')
+  }
+}, */{
+  path: base + '/:credential',
+  options: {
+    title: 'Credential',
+    templateUrl: requirejs.toUrl('bedrock-angular-credential/credential-viewer.html')
   }
 }];
 
