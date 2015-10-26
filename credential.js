@@ -8,6 +8,7 @@
  */
 define([
   'angular',
+  './authentication-service',
   './credential-controller',
   './credential-directive',
   './credential-library-service',
@@ -18,6 +19,7 @@ define([
   './export-credential-modal-directive'
 ], function(
   angular,
+  authenticationService,
   credentialController,
   credentialDirective,
   credentialLibraryService,
@@ -40,6 +42,7 @@ var module = angular.module('bedrock.credential', []);
 // viewing notifications of unclaimed credentials or done as part of another
 // module?
 
+module.service(authenticationService);
 module.controller(credentialController);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
