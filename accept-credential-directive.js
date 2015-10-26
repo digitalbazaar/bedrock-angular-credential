@@ -5,8 +5,7 @@
  *
  * @author Dave Longley
  */
-// TODO: remove node-uuid, temporary only
-define(['node-uuid'], function(uuid) {
+define([], function() {
 
 'use strict';
 
@@ -17,7 +16,6 @@ function factory($injector, brAlertService, config) {
     self.aioBaseUri = config.data['authorization-io'].baseUri;
     self.credential = null;
     self.display = {};
-    self.display.login = true;
     self.display.credential = false;
     self.display.acknowledgement = false;
     var service;
@@ -29,33 +27,6 @@ function factory($injector, brAlertService, config) {
         service = $injector.get(serviceName);
       }
     });
-
-    self.login = function() {
-      navigator.credentials.get({
-        query: {
-          '@context': 'https://w3id.org/identity/v1',
-          id: '',
-          publicKey: ''
-        },
-        // TODO: change polyfill to accept agent base URL
-        agentUrl: self.aioBaseUri + '/agent?op=get&route=params'
-      }).then(function(identity) {
-        if(!identity || !identity.id) {
-          throw new Error('DID not provided.');
-        }
-        // TODO: POST identity to verification service; should this be handled
-        // via callback or assume presence of brConsumerService?
-        return service.verify(identity);
-      }).then(function(verifyResult) {
-        // FIXME: the return value of service.verify is unknown
-        self.identity = verifyResult;
-        _showCredential();
-      }).catch(function(err) {
-        brAlertService.add('error', err);
-      }).then(function() {
-        $scope.$apply();
-      });
-    };
 
     self.acceptCredential = function() {
       return navigator.credentials.store(self.credential, {
