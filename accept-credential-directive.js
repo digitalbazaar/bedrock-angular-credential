@@ -20,6 +20,8 @@ function factory($injector, brAlertService, config) {
     self.display.acknowledgement = false;
     var service;
 
+    _showCredential();
+
     $scope.$watch(function() {
       return self.serviceName;
     }, function(serviceName) {
