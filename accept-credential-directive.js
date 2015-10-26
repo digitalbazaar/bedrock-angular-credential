@@ -43,12 +43,9 @@ function factory($injector, brAlertService, config) {
     };
 
     function _showCredential() {
-      // TODO: use `brCredentialService` to get credential using
-      // authorization via identity credential
-      var recipient = self.identity.credential[0]['@graph'].claim.id;
-      // FIXME: proper value for recipient
-      // var recipient = 'something';
-      service.get(recipient)
+      // FIXME: correct credentialId
+      var credentialId = $location.url();
+      service.get(credentialId)
         .then(function(response) {
           self.credential = response;
           _display('credential');
