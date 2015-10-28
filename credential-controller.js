@@ -6,7 +6,7 @@
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['jsonld', 'underscore'], function(jsonld, _) {
+define(['jsonld'], function(jsonld) {
 
 'use strict';
 
@@ -87,7 +87,7 @@ function factory(
         self.credential = credential;
         brSessionService.get().then(function(result) {
           // FIXME: add additional condition to display login
-          if(_.isEmpty(result)) {
+          if(!result.identity) {
             _display('login');
             return;
           }
