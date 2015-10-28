@@ -10,7 +10,7 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory($http, $location) {
+function factory($http, $location, brAlertService) {
   return {
     restrict: 'E',
     scope: {
@@ -27,11 +27,20 @@ function factory($http, $location) {
     model.logout = function() {
       var err_ = null;
       Promise.resolve($http.get('/consumer/logout'))
-      .catch(function(err) {
+      .then(function(res) {
+        if(res.status !== 204) {
+          throw new Error('Logout failed.');
+        }
+      }).catch(function(err) {
         err_ = err;
       }).then(function() {
         if(angular.isDefined(attrs.brLogoutCallback)) {
           return scope.callback({err: err_});
+        }
+        if(err_) {
+          brAlertService.add('error', err_, {scope: scope});
+          scope.$apply();
+          return;
         }
         $location.url('/');
         scope.$apply();
