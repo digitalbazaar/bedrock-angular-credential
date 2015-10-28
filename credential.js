@@ -19,7 +19,8 @@ define([
   './edit-credential-modal-directive',
   './export-credential-modal-directive',
   './accept-credential-directive',
-  './login-directive'
+  './login-directive',
+  './logout-directive'
 ], function(
   angular,
   authenticationService,
@@ -33,7 +34,8 @@ define([
   editCredentialModalDirective,
   exportCredentialModalDirective,
   acceptCredentialDirective,
-  loginDirective
+  loginDirective,
+  logoutDirective
 ) {
 
 'use strict';
@@ -59,6 +61,7 @@ module.directive(editCredentialModalDirective);
 module.directive(exportCredentialModalDirective);
 module.directive(acceptCredentialDirective);
 module.directive(loginDirective);
+module.directive(logoutDirective);
 
 /* @ngInject */
 module.config(function($routeProvider) {
