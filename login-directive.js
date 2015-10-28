@@ -23,9 +23,7 @@ function factory(brAuthenticationService, config) {
 
   function Link(scope) {
     var model = scope.model = {};
-    model.baseUri = config.data.baseUri;
     model.aioBaseUri = config.data['authorization-io'].baseUri;
-    model.siteTitle = config.data.siteTitle;
 
     model.login = function() {
       var identity_;
