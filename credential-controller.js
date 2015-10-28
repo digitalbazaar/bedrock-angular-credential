@@ -19,6 +19,7 @@ function factory(
   self.modals = {};
 
   self.credential = null;
+  self.storedCredential = null;
   self.allPublic = false;
   self.loading = true;
 
@@ -26,6 +27,7 @@ function factory(
   self.display.acceptDirective = false;
   self.display.credentialInfo = false;
   self.display.login = false;
+  self.display.acknowledgement = false;
 
   $scope.$watch(function() { return self.credential; }, function(credential) {
     if(!credential) {
@@ -47,8 +49,14 @@ function factory(
     }
   });
 
-  self.afterAccept = function() {
-
+  self.afterAccept = function(err, identity) {
+    if(err) {
+      // error handling
+    }
+    // FIXME: mark the credential as claimed
+    self.storedCredential = identity;
+    _display('acknowledgement');
+    $scope.$apply();
   };
 
   self.confirmDeleteCredential = function(err, result) {
