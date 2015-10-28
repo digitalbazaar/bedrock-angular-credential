@@ -29,6 +29,8 @@ function factory(
   self.display.login = false;
   self.display.acknowledgement = false;
 
+  init();
+
   $scope.$watch(function() { return self.credential; }, function(credential) {
     if(!credential) {
       return;
@@ -59,6 +61,10 @@ function factory(
     $scope.$apply();
   };
 
+  self.afterLogin = function(err, identity) {
+    init();
+  };
+
   self.confirmDeleteCredential = function(err, result) {
     if(!err && result === 'ok') {
       self.credential.deleted = true;
@@ -72,42 +78,44 @@ function factory(
     }
   };
 
-  brRefreshService.register($scope, function(force) {
-    // delay to show loading screen to avoid quick flashes
-    var opts = {
-      force: !!force,
-      delay: 250,
-      resourceParams: ['id']
-    };
-    self.loading = true;
-    brAlertService.clear();
-    brCredentialService.collection.getCurrent(opts)
-      .then(function(credential) {
-        self.loading = false;
-        self.credential = credential;
-        brSessionService.get().then(function(result) {
-          // FIXME: add additional condition to display login
-          if(!result.identity) {
-            _display('login');
-            return;
-          }
-          if(credential.claim.id === result.identity.id) {
-            // the recipient is logged in, present acceptance directive
-            _display('acceptDirective');
-          }
-          if(credential.issuer === result.identity.id) {
-            // the issur is logged in, just show the credential
-            _display('credentialInfo');
-          }
+  function init() {
+    brRefreshService.register($scope, function(force) {
+      // delay to show loading screen to avoid quick flashes
+      var opts = {
+        force: !!force,
+        delay: 250,
+        resourceParams: ['id']
+      };
+      self.loading = true;
+      brAlertService.clear();
+      brCredentialService.collection.getCurrent(opts)
+        .then(function(credential) {
+          self.loading = false;
+          self.credential = credential;
+          brSessionService.get().then(function(result) {
+            // FIXME: add additional condition to display login
+            if(!result.identity) {
+              _display('login');
+              return;
+            }
+            if(credential.claim.id === result.identity.id) {
+              // the recipient is logged in, present acceptance directive
+              _display('acceptDirective');
+            }
+            if(credential.issuer === result.identity.id) {
+              // the issur is logged in, just show the credential
+              _display('credentialInfo');
+            }
+          });
+          $scope.$apply();
+        })
+        .catch(function(err) {
+          brAlertService.add('error', err, {scope: $scope});
+          self.loading = false;
+          $scope.$apply();
         });
-        $scope.$apply();
-      })
-      .catch(function(err) {
-        brAlertService.add('error', err, {scope: $scope});
-        self.loading = false;
-        $scope.$apply();
-      });
-  })();
+    })();
+  }
 
   function _display(showProperty) {
     for(var propertyName in self.display) {
