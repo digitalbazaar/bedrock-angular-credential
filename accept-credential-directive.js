@@ -17,10 +17,27 @@ function factory($injector, brAlertService, config) {
     self.display = {};
     self.display.credential = true;
     self.display.acknowledgement = false;
+    self.identity = null;
     var service;
 
+    $scope.$watch(function() {
+      return self.credential;
+    }, function(credential) {
+      if(credential) {
+        self.identity = {
+          '@context': 'https://w3id.org/identity/v1',
+          id: credential.claim.id,
+          credential: [
+            {
+              '@graph': credential
+            }
+          ]
+        };
+      }
+    });
+
     self.acceptCredential = function() {
-      return navigator.credentials.store(self.credential, {
+      return navigator.credentials.store(self.identity, {
         agentUrl: self.aioBaseUri + '/agent?op=store&route=params'
       }).then(function(identity) {
         self.callback({err: null, identity: identity});
