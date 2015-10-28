@@ -6,13 +6,14 @@
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['jsonld'], function(jsonld) {
+define(['jsonld', 'underscore'], function(jsonld, _) {
 
 'use strict';
 
 /* @ngInject */
 function factory(
-  $scope, brAlertService, brRefreshService, brCredentialService) {
+  $scope, brAlertService, brRefreshService, brCredentialService,
+  brSessionService) {
   var self = this;
   self.state = brCredentialService.state;
   self.modals = {};
@@ -20,6 +21,11 @@ function factory(
   self.credential = null;
   self.allPublic = false;
   self.loading = true;
+
+  self.display = {};
+  self.display.acceptDirective = false;
+  self.display.credentialInfo = false;
+  self.display.login = false;
 
   $scope.$watch(function() { return self.credential; }, function(credential) {
     if(!credential) {
@@ -40,6 +46,10 @@ function factory(
         });
     }
   });
+
+  self.afterAccept = function() {
+
+  };
 
   self.confirmDeleteCredential = function(err, result) {
     if(!err && result === 'ok') {
@@ -67,6 +77,21 @@ function factory(
       .then(function(credential) {
         self.loading = false;
         self.credential = credential;
+        brSessionService.get().then(function(result) {
+          // FIXME: add additional condition to display login
+          if(_.isEmpty(result)) {
+            _display('login');
+            return;
+          }
+          if(credential.claim.id === result.identity.id) {
+            // the recipient is logged in, present acceptance directive
+            _display('acceptDirective');
+          }
+          if(credential.issuer === result.identity.id) {
+            // the issur is logged in, just show the credential
+            _display('credentialInfo');
+          }
+        });
         $scope.$apply();
       })
       .catch(function(err) {
@@ -75,6 +100,13 @@ function factory(
         $scope.$apply();
       });
   })();
+
+  function _display(showProperty) {
+    for(var propertyName in self.display) {
+      self.display[propertyName] = false;
+    }
+    self.display[showProperty] = true;
+  }
 }
 
 return {brCredentialController: factory};

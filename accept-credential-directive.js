@@ -14,50 +14,24 @@ function factory($injector, brAlertService, config) {
   function Ctrl($scope) {
     var self = this;
     self.aioBaseUri = config.data['authorization-io'].baseUri;
-    self.credential = null;
     self.display = {};
-    self.display.credential = false;
+    self.display.credential = true;
     self.display.acknowledgement = false;
     var service;
-
-    _showCredential();
-
-    $scope.$watch(function() {
-      return self.serviceName;
-    }, function(serviceName) {
-      if($injector.has(serviceName)) {
-        service = $injector.get(serviceName);
-      }
-    });
 
     self.acceptCredential = function() {
       return navigator.credentials.store(self.credential, {
         agentUrl: self.aioBaseUri + '/agent?op=store&route=params'
       }).then(function(identity) {
-        self.callback()(null, identity);
+        self.callback({err: null, identity: identity});
       }).catch(function(err) {
-        self.callback()(err);
+        self.callback({err: err});
       });
     };
 
     self.rejectCredential = function() {
       // TODO: call $scope.callback(err)
     };
-
-    function _showCredential() {
-      // FIXME: correct credentialId
-      var credentialId = $location.url();
-      service.get(credentialId)
-        .then(function(response) {
-          self.credential = response;
-          _display('credential');
-        }).catch(function(err) {
-          brAlertService.add('error', err);
-        }).then(function() {
-          $scope.$apply();
-        });
-
-    }
 
     function _display(showProperty) {
       for(var propertyName in self.display) {
@@ -71,7 +45,7 @@ function factory($injector, brAlertService, config) {
     restrict: 'E',
     scope: {
       callback: '&brAcceptCredentialCallback',
-      serviceName: '@brAcceptCredentialService'
+      credential: '=brCredential'
     },
     controller: Ctrl,
     controllerAs: 'ctrl',
