@@ -41,11 +41,9 @@ function factory(
         self.credential, self.credential.sysDisplayContext)
         .then(function(compacted) {
           self.compacted = compacted;
-        })
-        .catch(function(err) {
+        }).catch(function(err) {
           brAlertService.add('error', err, {scope: $scope});
-        })
-        .then(function() {
+        }).then(function() {
           $scope.$apply();
         });
     }
@@ -56,9 +54,19 @@ function factory(
       // error handling
     }
     // FIXME: mark the credential as claimed
-    self.storedCredential = identity;
-    _display('acknowledgement');
-    $scope.$apply();
+    self.storedCredential = identity.credential[0]['@graph'];
+    var storageRequest = {
+      id: identity.credential[0]['@graph'].id,
+      accepted: true
+    };
+    brCredentialService.collection.update(storageRequest)
+      .then(function(result) {
+        _display('acknowledgement');
+      }).catch(function(err) {
+        brAlertService.add('error', err, {scope: $scope});
+      }).then(function() {
+        $scope.$apply();
+      });
   };
 
   self.afterLogin = function(err, identity) {
