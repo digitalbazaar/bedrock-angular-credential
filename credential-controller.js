@@ -13,7 +13,7 @@ define(['jsonld'], function(jsonld) {
 /* @ngInject */
 function factory(
   $scope, brAlertService, brRefreshService, brCredentialService,
-  brSessionService) {
+  brSessionService, brAuthenticationService) {
   var self = this;
   self.state = brCredentialService.state;
   self.modals = {};
@@ -98,19 +98,20 @@ function factory(
           if(!result.identity) {
             _display('login');
             return;
-          }
-          if(self.credential.claim.id === result.identity.id) {
+          } else if(self.credential.claim.id === result.identity.id) {
             // the recipient is logged in, present acceptance directive
             _display('acceptDirective');
-          }
-          if(self.credential.issuer === result.identity.id) {
+          } else if(self.credential.issuer === result.identity.id) {
             // the issur is logged in, just show the credential
             _display('credentialInfo');
+          } else {
+            throw new Error('You are not authorized to view this credential.');
           }
-          throw new Error('You are not authorized to view this credential.');
         })
         .catch(function(err) {
           brAlertService.add('error', err, {scope: $scope});
+          brAuthenticationService.logout();
+          _display('login');
         })
         .then(function() {
           self.loading = false;
