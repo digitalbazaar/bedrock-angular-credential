@@ -5,7 +5,7 @@
  *
  * @author Matthew Collier
  */
-define([], function() {
+define(['angular'], function(angular) {
 
 'use strict';
 
