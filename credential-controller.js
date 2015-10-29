@@ -99,11 +99,11 @@ function factory(
             _display('login');
             return;
           }
-          if(credential.claim.id === result.identity.id) {
+          if(self.credential.claim.id === result.identity.id) {
             // the recipient is logged in, present acceptance directive
             _display('acceptDirective');
           }
-          if(credential.issuer === result.identity.id) {
+          if(self.credential.issuer === result.identity.id) {
             // the issur is logged in, just show the credential
             _display('credentialInfo');
           }
