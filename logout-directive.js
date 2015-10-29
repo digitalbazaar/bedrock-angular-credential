@@ -10,7 +10,8 @@ define(['angular'], function(angular) {
 'use strict';
 
 /* @ngInject */
-function factory($http, $location, brAlertService, brSessionService) {
+function factory(
+  $location, brAlertService, brAuthenticationService, brSessionService) {
   return {
     restrict: 'E',
     scope: {
@@ -33,13 +34,7 @@ function factory($http, $location, brAlertService, brSessionService) {
 
     model.logout = function() {
       var err_ = null;
-      Promise.resolve($http.get('/consumer/logout'))
-      .then(function(res) {
-        if(res.status !== 204) {
-          throw new Error('Logout failed.');
-        }
-        return brSessionService.get();
-      }).catch(function(err) {
+      brAuthenticationService.logout().catch(function(err) {
         err_ = err;
       }).then(function() {
         if(angular.isDefined(attrs.brLogoutCallback)) {

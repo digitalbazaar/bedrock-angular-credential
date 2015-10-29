@@ -10,7 +10,7 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory($http) {
+function factory($http, brSessionService) {
   var service = {};
 
   /**
@@ -47,7 +47,29 @@ function factory($http) {
     return Promise.resolve($http.post('/consumer/login', identity))
       .then(function(response) {
         return response.data;
+      }).then(function(identity) {
+        // refresh session, ignore error
+        return brSessionService.get().catch(function() {}).then(function() {
+          return identity;
+        });
       });
+  };
+
+  /**
+   * Logs out any identity that currently has an authenticated session.
+   *
+   * @return a Promise that resolves once the logout has finished.
+   */
+  service.logout = function(identity) {
+    // POST identity for verification and to establish session
+    // TODO: make URL configurable
+    return Promise.resolve($http.get('/consumer/logout')).then(function(res) {
+      if(res.status !== 204) {
+        throw new Error('Logout failed.');
+      }
+      // refresh session, ignore error
+      return brSessionService.get().catch(function() {});
+    });
   };
 
   return service;
