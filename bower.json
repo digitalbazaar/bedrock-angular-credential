@@ -9,6 +9,7 @@
     "bedrock-angular-alert": "^1.0.0",
     "bedrock-angular-form": "^1.0.0",
     "bedrock-angular-resource": "^1.0.1",
+    "bedrock-angular-session": "^1.0.0",
     "underscore": "~1.7.0"
   }
 }

@@ -40,7 +40,8 @@ define([
 
 'use strict';
 
-var module = angular.module('bedrock.credential', []);
+var module = angular.module(
+  'bedrock.credential', ['bedrock.alert', 'bedrock.session']);
 
 // TODO: need widgets for:
 // viewing claimed credentials

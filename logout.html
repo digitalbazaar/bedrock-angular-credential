@@ -1,3 +1,4 @@
-<button ng-click="model.logout()" type="button" class="btn btn-primary">
+<button ng-if="model.loggedIn"
+  ng-click="model.logout()" type="button" class="btn btn-primary">
   Logout
 </button>

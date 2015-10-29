@@ -10,7 +10,7 @@ define(['angular'], function(angular) {
 'use strict';
 
 /* @ngInject */
-function factory($http, $location, brAlertService) {
+function factory($http, $location, brAlertService, brSessionService) {
   return {
     restrict: 'E',
     scope: {
@@ -23,6 +23,13 @@ function factory($http, $location, brAlertService) {
 
   function Link(scope, elem, attrs) {
     var model = scope.model = {};
+    model.loggedIn = false;
+
+    scope.$watch(function() {
+      return brSessionService.session.identity;
+    }, function(identity) {
+      model.loggedIn = !!identity;
+    });
 
     model.logout = function() {
       var err_ = null;
@@ -31,6 +38,7 @@ function factory($http, $location, brAlertService) {
         if(res.status !== 204) {
           throw new Error('Logout failed.');
         }
+        return brSessionService.get();
       }).catch(function(err) {
         err_ = err;
       }).then(function() {
