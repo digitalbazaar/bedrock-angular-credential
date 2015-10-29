@@ -90,27 +90,28 @@ function factory(
       brAlertService.clear();
       brCredentialService.collection.getCurrent(opts)
         .then(function(credential) {
-          self.loading = false;
           self.credential = credential;
-          brSessionService.get().then(function(result) {
-            // FIXME: add additional condition to display login
-            if(!result.identity) {
-              _display('login');
-              return;
-            }
-            if(credential.claim.id === result.identity.id) {
-              // the recipient is logged in, present acceptance directive
-              _display('acceptDirective');
-            }
-            if(credential.issuer === result.identity.id) {
-              // the issur is logged in, just show the credential
-              _display('credentialInfo');
-            }
-          });
-          $scope.$apply();
+          return brSessionService.get();
+        })
+        .then(function(result) {
+          // FIXME: add additional condition to display login
+          if(!result.identity) {
+            _display('login');
+            return;
+          }
+          if(credential.claim.id === result.identity.id) {
+            // the recipient is logged in, present acceptance directive
+            _display('acceptDirective');
+          }
+          if(credential.issuer === result.identity.id) {
+            // the issur is logged in, just show the credential
+            _display('credentialInfo');
+          }
         })
         .catch(function(err) {
           brAlertService.add('error', err, {scope: $scope});
+        })
+        .then(function() {
           self.loading = false;
           $scope.$apply();
         });
