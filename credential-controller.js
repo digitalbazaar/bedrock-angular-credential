@@ -107,6 +107,7 @@ function factory(
             // the issur is logged in, just show the credential
             _display('credentialInfo');
           }
+          throw new Error('You are not authorized to view this credential.');
         })
         .catch(function(err) {
           brAlertService.add('error', err, {scope: $scope});
