@@ -60,8 +60,7 @@ function factory($http, brSessionService) {
    *
    * @return a Promise that resolves once the logout has finished.
    */
-  service.logout = function(identity) {
-    // POST identity for verification and to establish session
+  service.logout = function() {
     // TODO: make URL configurable
     return Promise.resolve($http.get('/consumer/logout')).then(function(res) {
       if(res.status !== 204) {
