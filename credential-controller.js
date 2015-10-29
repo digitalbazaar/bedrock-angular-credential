@@ -53,11 +53,12 @@ function factory(
     if(err) {
       // error handling
     }
-    // FIXME: mark the credential as claimed
     self.storedCredential = identity.credential[0]['@graph'];
+    self.storedCredential.sysState = 'claimed';
     var storageRequest = {
+      '@context': 'https://w3id.org/identity/v1',
       id: identity.credential[0]['@graph'].id,
-      accepted: true
+      sysState: 'claimed'
     };
     brCredentialService.collection.update(storageRequest)
       .then(function(result) {
