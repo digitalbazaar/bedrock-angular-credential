@@ -58,9 +58,10 @@ function factory(
 
       model.sorting = {
         name: '+',
-        issued: '+'
+        issued: '+',
+        recipient: '+'
       };
-      model.orderBy = ['+name', '+issued'];
+      model.orderBy = ['+name', '+issued', '+recipient'];
     });
 
     model.sortClick = function(field) {
@@ -69,12 +70,23 @@ function factory(
           model.sorting.name = (model.sorting.name === '+') ? '-' : '+';
           model.orderBy = [
             model.sorting.name + 'name',
-            model.sorting.issued + 'issued'
+            model.sorting.issued + 'issued',
+            model.sorting.recipient + 'recipient'
           ];
           break;
         case 'issued':
           model.sorting.issued = (model.sorting.issued === '+') ? '-' : '+';
           model.orderBy = [
+            model.sorting.issued + 'issued',
+            model.sorting.name + 'name',
+            model.sorting.recipient + 'recipient'
+          ];
+          break;
+        case 'recipient':
+          model.sorting.recipient =
+            (model.sorting.recipient === '+') ? '-' : '+';
+          model.orderBy = [
+            model.sorting.recipient + 'recipient',
             model.sorting.issued + 'issued',
             model.sorting.name + 'name'
           ];
