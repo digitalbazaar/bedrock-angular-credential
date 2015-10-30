@@ -108,8 +108,13 @@ function factory(
             _display('login');
             return;
           } else if(self.credential.claim.id === result.identity.id) {
-            // the recipient is logged in, present acceptance directive
-            _display('acceptDirective');
+            if(self.credential.sysState === 'unclaimed') {
+              // the recipient is logged in, present acceptance directive
+              _display('acceptDirective');
+            } else {
+              // the credential has already been accepted, display it
+              _display('credentialInfo');
+            }
           } else if(self.credential.issuer === result.identity.id) {
             // the issur is logged in, just show the credential
             _display('credentialInfo');
