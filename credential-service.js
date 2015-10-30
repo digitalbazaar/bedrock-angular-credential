@@ -20,11 +20,7 @@ function factory(
     byId: {},
     byType: {}
   };
-
   service.identity = null;
-  if($injector.has('brIdentityService')) {
-    service.identity = $injector.get('brIdentityService').identity;
-  }
 
   // FIXME: public access allowed so may not have an identity to use
   // FIXME: if collection tries to use url, should login and set this
@@ -37,7 +33,17 @@ function factory(
     url: credentialsBasePath
   });
 
-  if(service.identity) {
+  service.setIdentity = function(identity) {
+    service.identity = identity;
+    if(!identity) {
+      delete service.collections.claimed;
+      delete service.collections.issued;
+      delete service.collections.unclaimed;
+      service.credentials = {};
+      service.state = service.collection.state;
+      return;
+    }
+
     // credentials claimed by current identity
     service.collections.claimed = new brResourceService.Collection({
       url:
@@ -74,7 +80,7 @@ function factory(
     brRefreshService.register(service.collections.issued);
     brRefreshService.register(service.collections.claimed);
     brRefreshService.register(service.collections.unclaimed);
-  }
+  };
 
   service.registerDisplayer = function(displayer) {
     service.displayers.byId[displayer.id] = displayer;
@@ -103,6 +109,11 @@ function factory(
 
   // expose service to scope
   $rootScope.app.services.credential = service;
+
+  // TODO: remove, specify externally only
+  if($injector.has('brIdentityService')) {
+    service.setIdentity($injector.get('brIdentityService').identity);
+  }
 
   return service;
 }
