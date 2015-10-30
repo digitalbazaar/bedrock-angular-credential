@@ -6,12 +6,13 @@
  * @author David I. Lehn
  * @author Dave Longley
  */
-define([], function() {
+define(['angular'], function(angular) {
 
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brCredentialService) {
+function factory(
+  $location, brAlertService, brSessionService, brCredentialService) {
   return {
     restrict: 'E',
     scope: {
@@ -25,16 +26,42 @@ function factory(brAlertService, brCredentialService) {
   function Link(scope) {
     var model = scope.model = {};
     model.modals = {};
-    model.identity = brCredentialService.identity;
     model.state = {
-      credentials: brCredentialService.state.claimed
+      credentials: {loading: true}
     };
-    model.credentials = brCredentialService.credentials.claimed;
-    model.sorting = {
-      name: '+',
-      issued: '+'
-    };
-    model.orderBy = ['+name', '+issued'];
+
+    var promise;
+    model.identity = null;
+    if(brCredentialService.identity) {
+      promise = Promise.resolve(brCredentialService.identity);
+    } else {
+      promise = brSessionService.get().then(function(session) {
+        if(!('identity' in session)) {
+          // FIXME: handle more generally
+          $location.path('/');
+          scope.$apply();
+          return;
+        }
+        return session.identity;
+      });
+    }
+
+    var init = false;
+    promise.then(function(identity) {
+      init = true;
+      if(!identity) {
+        return;
+      }
+      model.identity = identity;
+      brCredentialService.setIdentity(identity);
+      _credentialTypeUpdated(scope.credentialType);
+
+      model.sorting = {
+        name: '+',
+        issued: '+'
+      };
+      model.orderBy = ['+name', '+issued'];
+    });
 
     model.sortClick = function(field) {
       switch(field) {
@@ -55,21 +82,7 @@ function factory(brAlertService, brCredentialService) {
       }
     };
 
-    scope.$watch('credentialType', function(value) {
-      if(angular.isUndefined(value) || value == 'claimed') {
-        scope.credentialType = 'claimed';
-        model.credentials = brCredentialService.credentials.claimed;
-        model.state.credentials = brCredentialService.state.claimed;
-      } else if(value === 'issued') {
-        model.credentials = brCredentialService.credentials.issued;
-        model.state.credentials = brCredentialService.state.issued;
-      } else if(value === 'unclaimed') {
-        model.credentials = brCredentialService.credentials.unclaimed;
-        model.state.credentials = brCredentialService.state.unclaimed;
-      } else {
-        console.error('Unknown credential type:', value);
-      }
-    });
+    scope.$watch('credentialType', _credentialTypeUpdated);
 
     model.confirmDeleteCredential = function(err, result) {
       if(!err && result === 'ok') {
@@ -85,9 +98,29 @@ function factory(brAlertService, brCredentialService) {
       }
     };
 
-    brCredentialService.collections.issued.getAll();
-    brCredentialService.collections.claimed.getAll();
-    brCredentialService.collections.unclaimed.getAll();
+    function _credentialTypeUpdated(value) {
+      if(!init) {
+        return;
+      }
+
+      if(angular.isUndefined(value) || value == 'claimed') {
+        scope.credentialType = 'claimed';
+        model.credentials = brCredentialService.credentials.claimed;
+        model.state.credentials = brCredentialService.state.claimed;
+      } else if(value === 'issued') {
+        model.credentials = brCredentialService.credentials.issued;
+        model.state.credentials = brCredentialService.state.issued;
+      } else if(value === 'unclaimed') {
+        model.credentials = brCredentialService.credentials.unclaimed;
+        model.state.credentials = brCredentialService.state.unclaimed;
+      } else {
+        console.error('Unknown credential type:', value);
+      }
+
+      for(var key in brCredentialService.collections) {
+        brCredentialService.collections[key].getAll();
+      }
+    }
   }
 }
 
