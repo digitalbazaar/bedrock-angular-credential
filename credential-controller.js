@@ -49,18 +49,37 @@ function factory(
     }
   });
 
-  self.afterAccept = function(err, identity) {
+  self.acceptCallback = function(err, identity) {
     if(err) {
-      // error handling
+      brAlertService.add('error', err);
+      $scope.$apply();
+      return;
+    }
+    if(identity === null) {
+      // rejected
+      var updateRequest = {
+        '@context': 'https://w3id.org/identity/v1',
+        id: self.credential.id,
+        sysState: 'rejected'
+      };
+      brCredentialService.collection.update(updateRequest)
+        .then(function(result) {
+          _display('rejected');
+        }).catch(function(err) {
+          brAlertService.add('error', err, {scope: $scope});
+        }).then(function() {
+          $scope.$apply();
+        });
+      return;
     }
     self.storedCredential = identity.credential[0]['@graph'];
     self.storedCredential.sysState = 'claimed';
-    var storageRequest = {
+    var updateRequest = {
       '@context': 'https://w3id.org/identity/v1',
       id: identity.credential[0]['@graph'].id,
       sysState: 'claimed'
     };
-    brCredentialService.collection.update(storageRequest)
+    brCredentialService.collection.update(updateRequest)
       .then(function(result) {
         _display('acknowledgement');
       }).catch(function(err) {
