@@ -47,7 +47,7 @@ function factory($injector, brAlertService, config) {
     };
 
     self.rejectCredential = function() {
-      // TODO: call $scope.callback(err)
+      self.callback({err: null, identity: null});
     };
 
     function _display(showProperty) {
