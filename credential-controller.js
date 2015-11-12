@@ -50,6 +50,7 @@ function factory(
   });
 
   self.acceptCallback = function(err, identity) {
+    var updateRequest;
     if(err) {
       brAlertService.add('error', err);
       $scope.$apply();
@@ -57,7 +58,7 @@ function factory(
     }
     if(identity === null) {
       // rejected
-      var updateRequest = {
+      updateRequest = {
         '@context': 'https://w3id.org/identity/v1',
         id: self.credential.id,
         sysState: 'rejected'
@@ -74,7 +75,7 @@ function factory(
     }
     self.storedCredential = identity.credential[0]['@graph'];
     self.storedCredential.sysState = 'claimed';
-    var updateRequest = {
+    updateRequest = {
       '@context': 'https://w3id.org/identity/v1',
       id: identity.credential[0]['@graph'].id,
       sysState: 'claimed'
