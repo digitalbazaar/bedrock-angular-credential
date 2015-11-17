@@ -140,7 +140,7 @@ function factory(
         if('type' in err && err.type === 'NotFound' &&
           'identity' in session) {
           err.message =
-            'Not found. Please make sure you signed in with the ' +
+            'Credential not found. Please make sure you signed in with the ' +
             'correct identity.';
           brAlertService.add('error', err, {scope: $scope});
         }
