@@ -108,51 +108,48 @@ function factory(
   };
 
   function init() {
-    brRefreshService.register($scope, function(force) {
-      var session = null;
-      // delay to show loading screen to avoid quick flashes
-      var opts = {
-        force: !!force,
-        delay: 250,
-        resourceParams: ['id']
-      };
-      self.loading = true;
-      brAlertService.clear();
-      brSessionService.get()
-        .then(function(result) {
-          session = result;
-          return brCredentialService.collection.getCurrent(opts);
-        }).then(function(credential) {
-          self.credential = credential;
-          if(self.credential.sysIsPublic) {
-            _display('credentialInfo');
-          } else if(self.credential.claim.id === session.identity.id) {
-            if(self.credential.sysState === 'unclaimed') {
-              // the recipient is logged in, present acceptance directive
-              _display('acceptDirective');
-            } else {
-              // the credential has already been accepted, display it
-              _display('credentialInfo');
-            }
-          } else if(self.credential.issuer === session.identity.id) {
-            // the issuer is logged in, just show the credential
+    var session = null;
+    self.loading = true;
+    brAlertService.clear();
+    brSessionService.get()
+      .then(function(result) {
+        session = result;
+        // delay to show loading screen to avoid quick flashes
+        var opts = {
+          delay: 250,
+          resourceParams: ['id']
+        };
+        return brCredentialService.collection.getCurrent(opts);
+      }).then(function(credential) {
+        self.credential = credential;
+        if(self.credential.sysIsPublic) {
+          _display('credentialInfo');
+        } else if(self.credential.claim.id === session.identity.id) {
+          if(self.credential.sysState === 'unclaimed') {
+            // the recipient is logged in, present acceptance directive
+            _display('acceptDirective');
+          } else {
+            // the credential has already been accepted, display it
             _display('credentialInfo');
           }
-        }).catch(function(err) {
-          if('type' in err && err.type === 'NotFound' &&
-            'identity' in session) {
-            err.message =
-              'Not found.  Please make sure you signed in with the ' +
-              'correct identity';
-            brAlertService.add('error', err, {scope: $scope});
-          }
-          brAuthenticationService.logout();
-          _display('login');
-        }).then(function() {
-          self.loading = false;
-          $scope.$apply();
-        });
-    })();
+        } else if(self.credential.issuer === session.identity.id) {
+          // the issuer is logged in, just show the credential
+          _display('credentialInfo');
+        }
+      }).catch(function(err) {
+        if('type' in err && err.type === 'NotFound' &&
+          'identity' in session) {
+          err.message =
+            'Not found. Please make sure you signed in with the ' +
+            'correct identity.';
+          brAlertService.add('error', err, {scope: $scope});
+        }
+        brAuthenticationService.logout();
+        _display('login');
+      }).then(function() {
+        self.loading = false;
+        $scope.$apply();
+      });
   }
 
   function _display(showProperty) {
