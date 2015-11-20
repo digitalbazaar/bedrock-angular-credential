@@ -21,7 +21,8 @@ function factory(
       credential: '=brCredential',
       groups: '=?brGroups',
       library: '=?brLibrary',
-      showActions: '=?brShowActions'
+      showActions: '=?brShowActions',
+      options: '=brOptions'
     },
     templateUrl: requirejs.toUrl(
       'bedrock-angular-credential/credential.html'),
@@ -65,10 +66,19 @@ function factory(
             model.compacted = compacted;
             model.groups = results[0];
             model.actionables = results[1];
-            // FIXME: handle text template
-            var template = '<' + displayer.directive +
-              ' br-model="model"' +
-              ' br-options="{editable: false}"></' + displayer.directive + '>';
+
+            var template;
+            if(scope.options && scope.options.display === 'simple') {
+              template = '<' + 'br-simple-credential-displayer' +
+                          ' br-model="model.compacted"' +
+                          ' br-groups="model.groups"' +
+                          ' br-options="' + 'options' + '"></' + 'br-simple-credential-displayer' + 
+                          '>';
+            } else {
+              template = '<' + displayer.directive +
+                          ' br-model="model"' +
+                          ' br-options="{editable: false}"></' + displayer.directive + '>';
+            }
             model.credentialView = $compile(template)(scope);
             element.prepend(model.credentialView);
             scope.$apply();
