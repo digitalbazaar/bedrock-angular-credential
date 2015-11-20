@@ -6,9 +6,11 @@
  * @author Dave Longley
  * @author David I. Lehn
  */
+// TODO: alphabetize
 define([
   'angular',
   './authentication-service',
+  './simple-credential-displayer-directive',
   './credential-controller',
   './credential-directive',
   './credential-library-service',
@@ -24,6 +26,7 @@ define([
 ], function(
   angular,
   authenticationService,
+  simpleCredentialDisplayerDirective,
   credentialController,
   credentialDirective,
   credentialLibraryService,
@@ -60,9 +63,11 @@ module.directive(credentialsListDirective);
 module.directive(defaultCredentialDisplayerDirective);
 module.directive(editCredentialModalDirective);
 module.directive(exportCredentialModalDirective);
+// TODO: alphabetize
 module.directive(acceptCredentialDirective);
 module.directive(loginDirective);
 module.directive(logoutDirective);
+module.directive(simpleCredentialDisplayerDirective);
 
 /* @ngInject */
 module.config(function($routeProvider) {
