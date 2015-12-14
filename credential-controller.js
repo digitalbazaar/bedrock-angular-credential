@@ -13,21 +13,29 @@ define(['jsonld'], function(jsonld) {
 /* @ngInject */
 function factory(
   $scope, brAlertService, brRefreshService, brCredentialService,
-  brSessionService, brAuthenticationService) {
+  brSessionService, brAuthenticationService, config) {
   var self = this;
   self.state = brCredentialService.state;
   self.modals = {};
 
+  self.altUpdateEndpoint = null;
   self.credential = null;
   self.storedCredential = null;
   self.allPublic = false;
   self.loading = true;
 
-  self.display = {};
-  self.display.acceptDirective = false;
-  self.display.credentialInfo = false;
-  self.display.login = false;
-  self.display.acknowledgement = false;
+  self.display = {
+    acceptDirective: false,
+    credentialInfo: false,
+    login: false,
+    acknowledgement: false
+  };
+
+  if(config.data['angular-credential'] &&
+    config.data['angular-credential'].altUpdateEndpoint) {
+    self.altUpdateEndpoint =
+      config.data.baseUri + config.data['angular-credential'].altUpdateEndpoint;
+  }
 
   init();
 
@@ -51,6 +59,7 @@ function factory(
 
   self.acceptCallback = function(err, identity) {
     var updateRequest;
+    var credentialServiceOptions = {};
     if(err) {
       brAlertService.add('error', err);
       $scope.$apply();
@@ -63,7 +72,12 @@ function factory(
         id: self.credential.id,
         sysState: 'rejected'
       };
-      brCredentialService.collection.update(updateRequest)
+      if(!compareHost(updateRequest.id)) {
+        credentialServiceOptions.url = self.altUpdateEndpoint + '?id=' +
+          updateRequest.id;
+      }
+      brCredentialService.collection.update(
+        updateRequest, credentialServiceOptions)
         .then(function(result) {
           _display('rejected');
         }).catch(function(err) {
@@ -80,7 +94,12 @@ function factory(
       id: identity.credential[0]['@graph'].id,
       sysState: 'claimed'
     };
-    brCredentialService.collection.update(updateRequest)
+    if(!compareHost(updateRequest.id)) {
+      credentialServiceOptions.url = self.altUpdateEndpoint + '?id=' +
+        updateRequest.id;
+    }
+    brCredentialService.collection.update(
+      updateRequest, credentialServiceOptions)
       .then(function(result) {
         _display('acknowledgement');
       }).catch(function(err) {
@@ -157,6 +176,14 @@ function factory(
       self.display[propertyName] = false;
     }
     self.display[showProperty] = true;
+  }
+
+  function compareHost(url) {
+    var matched = false;
+    if(url.indexOf(config.data.baseUri) === 0) {
+      matched = true;
+    }
+    return matched;
   }
 }
 
