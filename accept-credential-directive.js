@@ -13,7 +13,6 @@ define([], function() {
 function factory($injector, brAlertService, config) {
   function Ctrl($scope) {
     var self = this;
-    self.aioBaseUri = config.data['authorization-io'].baseUri;
     self.display = {};
     self.display.credential = true;
     self.display.acknowledgement = false;
@@ -38,7 +37,8 @@ function factory($injector, brAlertService, config) {
 
     self.acceptCredential = function() {
       return navigator.credentials.store(self.identity, {
-        agentUrl: self.aioBaseUri + '/agent?op=store&route=params'
+        agentUrl: config.data['authorization-io'].agentUrl +
+          '?op=store&route=params'
       }).then(function(identity) {
         self.callback({err: null, identity: identity});
       }).catch(function(err) {
