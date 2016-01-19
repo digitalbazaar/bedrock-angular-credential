@@ -68,7 +68,7 @@ function factory(
             // FIXME: handle text template
             var template = '<' + displayer.directive +
               ' br-model="model"' +
-              ' br-options="{editable: false}"></' + displayer.directive + '>'
+              ' br-options="{editable: false}"></' + displayer.directive + '>';
             model.credentialView = $compile(template)(scope);
             element.prepend(model.credentialView);
             scope.$apply();
