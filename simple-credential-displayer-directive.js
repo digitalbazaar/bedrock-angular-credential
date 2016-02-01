@@ -1,15 +1,19 @@
 /*!
  * Simple credential displayer directive.
- * 
+ *
  * Can take advantage of the following options sent through brOptions:
- * 
- * limit: an integer limiting the amount of properties displayed, defaults to MAX
- * collapsable: a flag denoting if the properties underneath the credential can collapse and expand,
- *              if true, the properties will collapse down to whatever number is specified by 'limit'
- * hideTitle: a flag that hides the credential's title, used if you only want to display credential properties
  *
+ * limit: an integer limiting the amount of properties displayed, defaults to
+ *   MAX
  *
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * collapsable: a flag denoting if the properties underneath the credential can
+ *   collapse and expand, if true, the properties will collapse down to
+ *   whatever number is specified by 'limit'
+ *
+ * hideTitle: a flag that hides the credential's title, used if you only want
+ *   to display credential properties
+ *
+ * Copyright (c) 2015-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Alex Lamar
  */
@@ -18,7 +22,7 @@ define(['jsonld'], function(jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory(brCredentialService) {
+function factory() {
   return {
     restrict: 'E',
     scope: {
@@ -31,9 +35,8 @@ function factory(brCredentialService) {
     link: Link
   };
 
-  function Link(scope, element, attrs) {
+  function Link(scope) {
     var LIMIT_DEFAULT = Infinity;
-
     var model = scope.model;
 
     model.properties = getReadableProperties(scope.model, scope.groups);
@@ -62,14 +65,15 @@ function factory(brCredentialService) {
         // Expand
         model.limit = Infinity;
       }
-    }
+    };
 
     function getReadableProperties(model, groups) {
       var properties = [];
 
       if(groups.length === 0) {
-        // TODO: We can probably do a better job of printing claims that do not have a readable layout
-        // specified, but for now we just indicate that no such layout exists
+        // TODO: We can probably do a better job of printing claims that do not
+        // have a readable layout specified, but for now we just indicate that
+        // no such layout exists
         properties.push('Failed to read credential properties');
         return properties;
       }
@@ -83,16 +87,16 @@ function factory(brCredentialService) {
       }
 
       parseGroups(model, groups, false);
-      return properties
+      return properties;
 
-      function parseGroups(model, groups, collapsed) {
+      function parseGroups(model, groups) {
         for(var key in groups) {
           var group = groups[key];
           parseGroup(model, group, false);
         }
       }
 
-      function parseGroup(model, group, collapsed) {
+      function parseGroup(model, group) {
         for(var key in group.layout) {
           var property = group.layout[key];
           var propertyId;
@@ -122,7 +126,7 @@ function factory(brCredentialService) {
               console.log('Failed to match value for group id: ' + propertyId);
               continue;
             }
-            var label = schema.label
+            var label = schema.label;
             if(label === 'Image') {
               continue;
             }
