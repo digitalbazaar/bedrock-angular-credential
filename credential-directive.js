@@ -1,7 +1,7 @@
 /*!
  * Credential directive.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  * @author Dave Longley
@@ -13,8 +13,7 @@ define(['jsonld', 'underscore'], function(jsonld, _) {
 /* @ngInject */
 function factory(
   $compile, brAlertService, brCredentialService, brCredentialLibraryService,
-  brFormLibraryService,
-  config) {
+  brFormLibraryService) {
   return {
     restrict: 'E',
     scope: {
@@ -67,17 +66,21 @@ function factory(
             model.groups = results[0];
             model.actionables = results[1];
 
+            // TODO: can this HTML be done in the view instead?
             var template;
             if(scope.options && scope.options.display === 'simple') {
-              template = '<' + 'br-simple-credential-displayer' +
-                          ' br-model="model.compacted"' +
-                          ' br-groups="model.groups"' +
-                          ' br-options="' + 'options' + '"></' + 'br-simple-credential-displayer' + 
-                          '>';
+              template =
+                '<' + 'br-simple-credential-displayer' +
+                ' br-model="model.compacted"' +
+                ' br-groups="model.groups"' +
+                ' br-options="' + 'options' + '"></' +
+                'br-simple-credential-displayer>';
             } else {
-              template = '<' + displayer.directive +
-                          ' br-model="model"' +
-                          ' br-options="{editable: false}"></' + displayer.directive + '>';
+              template =
+                '<' + displayer.directive +
+                ' br-model="model"' +
+                ' br-options="{editable: false}"></' +
+                displayer.directive + '>';
             }
             model.credentialView = $compile(template)(scope);
             element.prepend(model.credentialView);
