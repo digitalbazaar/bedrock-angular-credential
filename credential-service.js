@@ -1,11 +1,11 @@
 /*!
  * Credential Service.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define(['jsonld', 'underscore'], function(jsonld, _) {
+define(['jsonld', 'lodash'], function(jsonld, _) {
 
 'use strict';
 

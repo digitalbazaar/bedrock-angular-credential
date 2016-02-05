@@ -6,7 +6,7 @@
  * @author David I. Lehn
  * @author Dave Longley
  */
-define(['jsonld', 'underscore'], function(jsonld, _) {
+define(['jsonld', 'lodash'], function(jsonld, _) {
 
 'use strict';
 
