@@ -1,7 +1,7 @@
 /*!
  * Credentials directive.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  * @author Dave Longley
@@ -11,12 +11,12 @@ define(['angular'], function(angular) {
 'use strict';
 
 /* @ngInject */
-function factory(
-  $location, brAlertService, brSessionService, brCredentialService) {
+function factory(brAlertService, brCredentialService) {
   return {
     restrict: 'E',
     scope: {
-      credentialType: '@brCredentialType'
+      credentialType: '@brCredentialType',
+      identity: '=brIdentity'
     },
     templateUrl: requirejs.toUrl(
       'bedrock-angular-credential/credentials-list.html'),
@@ -29,40 +29,15 @@ function factory(
     model.state = {
       credentials: {loading: true}
     };
+    brCredentialService.setIdentity(scope.identity);
+    _credentialTypeUpdated(scope.credentialType);
 
-    var promise;
-    model.identity = null;
-    if(brCredentialService.identity) {
-      promise = Promise.resolve(brCredentialService.identity);
-    } else {
-      promise = brSessionService.get().then(function(session) {
-        if(!('identity' in session)) {
-          // FIXME: handle more generally
-          $location.path('/');
-          scope.$apply();
-          return;
-        }
-        return session.identity;
-      });
-    }
-
-    var init = false;
-    promise.then(function(identity) {
-      init = true;
-      if(!identity) {
-        return;
-      }
-      model.identity = identity;
-      brCredentialService.setIdentity(identity);
-      _credentialTypeUpdated(scope.credentialType);
-
-      model.sorting = {
-        name: '+',
-        issued: '+',
-        recipient: '+'
-      };
-      model.orderBy = ['+name', '+issued', '+recipient'];
-    });
+    model.sorting = {
+      name: '+',
+      issued: '+',
+      recipient: '+'
+    };
+    model.orderBy = ['+name', '+issued', '+recipient'];
 
     model.sortClick = function(field) {
       switch(field) {
@@ -111,10 +86,6 @@ function factory(
     };
 
     function _credentialTypeUpdated(value) {
-      if(!init) {
-        return;
-      }
-
       if(angular.isUndefined(value) || value == 'claimed') {
         scope.credentialType = 'claimed';
         model.credentials = brCredentialService.credentials.claimed;

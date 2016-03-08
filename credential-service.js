@@ -110,11 +110,6 @@ function factory(
   // expose service to scope
   $rootScope.app.services.credential = service;
 
-  // TODO: remove, specify externally only
-  if($injector.has('brIdentityService')) {
-    service.setIdentity($injector.get('brIdentityService').identity);
-  }
-
   return service;
 }
 
