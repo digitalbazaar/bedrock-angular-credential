@@ -11,7 +11,7 @@ define(['jsonld'], function(jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brCredentialService) {
+function factory(brAlertService, brCredentialService, $location) {
   return {
     restrict: 'E',
     scope: {credential: '=brCredential'},
@@ -39,7 +39,12 @@ function factory(brAlertService, brCredentialService) {
       }
       model.loading = true;
       brAlertService.clearFeedback();
-      brCredentialService.collection.update(credential)
+      var options = {};
+      var search = $location.search();
+      if('id' in search) {
+        options.url = $location.path() + '?id=' + search.id;
+      }
+      brCredentialService.collection.update(credential, options)
         .then(function(credential) {
           model.loading = false;
           stackable.close(null, credential);
