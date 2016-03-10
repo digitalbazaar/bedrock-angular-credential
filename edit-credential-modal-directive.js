@@ -6,15 +6,18 @@
  * @author David I. Lehn
  * @author Dave Longley
  */
-define(['jsonld'], function(jsonld) {
+define([], function() {
 
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brCredentialService, $location) {
+function factory(brAlertService, brCredentialService) {
   return {
     restrict: 'E',
-    scope: {credential: '=brCredential'},
+    scope: {
+      credential: '=brCredential',
+      updateUrl: '=brUpdateUrl'
+    },
     require: '^stackable',
     templateUrl: requirejs.toUrl(
       'bedrock-angular-credential/edit-credential-modal.html'),
@@ -39,9 +42,8 @@ function factory(brAlertService, brCredentialService, $location) {
       model.loading = true;
       brAlertService.clearFeedback();
       var options = {};
-      var search = $location.search();
-      if('id' in search) {
-        options.url = $location.path() + '?id=' + search.id;
+      if(scope.updateUrl) {
+        options.url = scope.updateUrl;
       }
       brCredentialService.collection.update(credential, options)
         .then(function(credential) {

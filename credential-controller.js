@@ -19,6 +19,7 @@ function factory(
   self.modals = {};
 
   self.altUpdateEndpoint = null;
+  self.credentialUpdateUrl = null;
   self.credential = null;
   self.storedCredential = null;
   self.allPublic = false;
@@ -43,6 +44,10 @@ function factory(
   $scope.$watch(function() { return self.credential; }, function(credential) {
     if(!credential) {
       return;
+    }
+    if(!compareHost(credential.id)) {
+      self.credentialUpdateUrl = brCredentialService.credentialsBasePath +
+        '?id=' + credential.id;
     }
     self.allPublic = jsonld.hasValue(self.credential, 'sysPublic', '*');
     if(self.credential.sysDisplayContext) {

@@ -25,12 +25,12 @@ function factory(
   // FIXME: public access allowed so may not have an identity to use
   // FIXME: if collection tries to use url, should login and set this
 
-  var credentialsBasePath =
+  service.credentialsBasePath =
     config.data['bedrock-angular-credential'].credentialsBasePath;
 
   // generic collection of credentials
   service.collection = new brResourceService.Collection({
-    url: credentialsBasePath
+    url: service.credentialsBasePath
   });
 
   service.setIdentity = function(identity) {
@@ -47,21 +47,21 @@ function factory(
     // credentials claimed by current identity
     service.collections.claimed = new brResourceService.Collection({
       url:
-        credentialsBasePath + '?filter=claimed&recipient=' +
+        service.credentialsBasePath + '?filter=claimed&recipient=' +
         encodeURIComponent(service.identity.id)
     });
 
     // credentials issued by current identity
     service.collections.issued = new brResourceService.Collection({
       url:
-        credentialsBasePath + '?issuer=' +
+        service.credentialsBasePath + '?issuer=' +
         encodeURIComponent(service.identity.id)
     });
 
     // unclaimed credentials where current identity is the recipient
     service.collections.unclaimed = new brResourceService.Collection({
       url:
-        credentialsBasePath + '?filter=unclaimed&recipient=' +
+        service.credentialsBasePath + '?filter=unclaimed&recipient=' +
         encodeURIComponent(service.identity.id)
     });
 
