@@ -22,7 +22,9 @@ define([
   './export-credential-modal-directive',
   './accept-credential-directive',
   './login-directive',
-  './logout-directive'
+  './logout-directive',
+  './select-text-directive',
+  './share-credential-modal-directive'
 ], function(
   angular,
   authenticationService,
@@ -38,7 +40,9 @@ define([
   exportCredentialModalDirective,
   acceptCredentialDirective,
   loginDirective,
-  logoutDirective
+  logoutDirective,
+  selectTextDirective,
+  shareCredentialModalDirective
 ) {
 
 'use strict';
@@ -67,6 +71,8 @@ module.directive(exportCredentialModalDirective);
 module.directive(acceptCredentialDirective);
 module.directive(loginDirective);
 module.directive(logoutDirective);
+module.directive(selectTextDirective);
+module.directive(shareCredentialModalDirective);
 module.directive(simpleCredentialDisplayerDirective);
 
 /* @ngInject */

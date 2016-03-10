@@ -20,6 +20,7 @@ function factory(
 
   self.altUpdateEndpoint = null;
   self.credentialUpdateUrl = null;
+  self.credentialShareUrl = null;
   self.credential = null;
   self.storedCredential = null;
   self.allPublic = false;
@@ -48,6 +49,10 @@ function factory(
     if(!compareHost(credential.id)) {
       self.credentialUpdateUrl = brCredentialService.credentialsBasePath +
         '?id=' + credential.id;
+      self.credentialShareUrl = config.data.baseUri + self.credentialUpdateUrl;
+    } else {
+      self.credentialUpdateUrl = null;
+      self.credentialShareUrl = credential.id;
     }
     self.allPublic = jsonld.hasValue(self.credential, 'sysPublic', '*');
     if(self.credential.sysDisplayContext) {
