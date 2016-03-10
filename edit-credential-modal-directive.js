@@ -1,7 +1,7 @@
 /*!
  * Edit Credential Modal.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  * @author Dave Longley
@@ -24,8 +24,7 @@ function factory(brAlertService, brCredentialService, $location) {
   function Link(scope, element, attrs, stackable) {
     var model = scope.model = {};
     model.loading = false;
-    // FIXME: support more than all-or-none public access
-    model.allPublic = jsonld.hasValue(scope.credential, 'sysPublic', '*');
+    model.allPublic = scope.credential.sysIsPublic || false;
 
     model.editCredential = function() {
       // build credential update

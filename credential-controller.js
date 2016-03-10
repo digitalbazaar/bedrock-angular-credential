@@ -1,7 +1,7 @@
 /*!
  * Credential Controller.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
@@ -23,6 +23,7 @@ function factory(
   self.storedCredential = null;
   self.allPublic = false;
   self.loading = true;
+  self.allowEdit = false;
 
   self.display = {
     acceptDirective: false,
@@ -141,7 +142,8 @@ function factory(
         return brCredentialService.collection.getCurrent(opts);
       }).then(function(credential) {
         self.credential = credential;
-        if(self.credential.sysIsPublic) {
+        if(!('identity' in session) && self.credential.sysIsPublic) {
+          // display a public credential to a non-authenticated user
           _display('credentialInfo');
         } else if(self.credential.claim.id === session.identity.id) {
           if(self.credential.sysState === 'unclaimed') {
@@ -149,6 +151,7 @@ function factory(
             _display('acceptDirective');
           } else {
             // the credential has already been accepted, display it
+            self.allowEdit = true;
             _display('credentialInfo');
           }
         } else if(self.credential.issuer === session.identity.id) {
