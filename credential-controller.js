@@ -187,11 +187,7 @@ function factory(
   }
 
   function compareHost(url) {
-    var matched = false;
-    if(url.indexOf(config.data.baseUri) === 0) {
-      matched = true;
-    }
-    return matched;
+    return url.indexOf(config.data.baseUri) === 0;
   }
 }
 
