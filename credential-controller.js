@@ -137,6 +137,10 @@ function factory(
     }
   };
 
+  self.encodeUrl = function(url) {
+    return encodeURIComponent(url);
+  };
+
   function init() {
     var session = null;
     self.loading = true;

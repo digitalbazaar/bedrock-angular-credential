@@ -11,6 +11,7 @@ define([
   'angular',
   './authentication-service',
   './simple-credential-displayer-directive',
+  './credential-action-menu-directive',
   './credential-controller',
   './credential-directive',
   './credential-library-service',
@@ -29,6 +30,7 @@ define([
   angular,
   authenticationService,
   simpleCredentialDisplayerDirective,
+  credentialActionMenuDirective,
   credentialController,
   credentialDirective,
   credentialLibraryService,
@@ -63,6 +65,7 @@ module.controller(credentialController);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
+module.directive(credentialActionMenuDirective);
 module.directive(credentialsListDirective);
 module.directive(defaultCredentialDisplayerDirective);
 module.directive(editCredentialModalDirective);
