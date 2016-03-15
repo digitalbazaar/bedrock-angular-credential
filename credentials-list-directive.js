@@ -6,7 +6,7 @@
  * @author David I. Lehn
  * @author Dave Longley
  */
-define(['angular'], function(angular) {
+define(['angular', 'jsonld'], function(angular, jsonld) {
 
 'use strict';
 
@@ -38,6 +38,10 @@ function factory(brAlertService, brCredentialService) {
       recipient: '+'
     };
     model.orderBy = ['+name', '+issued', '+recipient'];
+
+    model.isPublic = function(credential) {
+      return jsonld.hasValue(credential, 'sysPublic', '*');
+    };
 
     model.sortClick = function(field) {
       switch(field) {
