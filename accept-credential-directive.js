@@ -10,7 +10,8 @@ define([], function() {
 'use strict';
 
 /* @ngInject */
-function factory($injector, brAlertService, config) {
+function factory(config) {
+  /* @ngInject */
   function Ctrl($scope) {
     var self = this;
     self.display = {};
