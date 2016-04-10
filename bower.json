@@ -7,15 +7,12 @@
   ],
   "ignore": [],
   "dependencies": {
-    "bedrock-angular": "^1.0.0",
-    "bedrock-angular-alert": "^1.0.0",
-    "bedrock-angular-form": "^1.0.0",
-    "bedrock-angular-resource": "^1.0.1",
-    "bedrock-angular-session": "^1.0.0",
+    "bedrock-angular": "^2.0.0",
+    "bedrock-angular-alert": "^2.0.0",
+    "bedrock-angular-form": "^2.0.0",
+    "bedrock-angular-resource": "^2.0.0",
+    "bedrock-angular-session": "^2.0.0",
     "lodash": "^4.1.0",
     "jsonld": "~0.4.6"
-  },
-  "resolutions": {
-    "angular": "1.3.20"
   }
 }
