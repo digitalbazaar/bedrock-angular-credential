@@ -10,8 +10,7 @@ define(['jsonld', 'lodash'], function(jsonld, _) {
 'use strict';
 
 /* @ngInject */
-function factory(
-  $injector, $rootScope, brRefreshService, brResourceService, config) {
+function factory($rootScope, brRefreshService, brResourceService, config) {
   var service = {};
   // storage for different collections
   service.collections = {};

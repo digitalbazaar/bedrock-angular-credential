@@ -29,8 +29,11 @@ function factory(brAlertService, brCredentialService) {
     model.state = {
       credentials: {loading: true}
     };
-    brCredentialService.setIdentity(scope.identity);
-    _credentialTypeUpdated(scope.credentialType);
+
+    scope.$watch('identity', function(identity) {
+      brCredentialService.setIdentity(identity);
+      _credentialTypeUpdated(scope.credentialType);
+    });
 
     model.sorting = {
       name: '+',
@@ -90,7 +93,7 @@ function factory(brAlertService, brCredentialService) {
     };
 
     function _credentialTypeUpdated(value) {
-      if(angular.isUndefined(value) || value == 'claimed') {
+      if(angular.isUndefined(value) || value === 'claimed') {
         scope.credentialType = 'claimed';
         model.credentials = brCredentialService.credentials.claimed;
         model.state.credentials = brCredentialService.state.claimed;
