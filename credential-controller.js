@@ -48,7 +48,7 @@ function factory(
     }
     if(!compareHost(credential.id)) {
       self.credentialUpdateUrl = brCredentialService.credentialsBasePath +
-        '?id=' + credential.id;
+        '?id=' + encodeURIComponent(credential.id);
       self.credentialShareUrl = config.data.baseUri + self.credentialUpdateUrl;
     } else {
       self.credentialUpdateUrl = null;
