@@ -1,5 +1,5 @@
 /*!
- * Share Credential Modal.
+ * Share Credentials Modal.
  *
  * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
  */
@@ -12,11 +12,12 @@ function factory() {
   return {
     restrict: 'E',
     scope: {
+      identity: '=brIdentity',
       shareUrl: '=brShareUrl'
     },
     require: '^stackable',
     templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/share-credential-modal.html'),
+      'bedrock-angular-credential/share-credentials-modal.html'),
     link: Link
   };
 
@@ -25,6 +26,6 @@ function factory() {
   }
 }
 
-return {brShareCredentialModal: factory};
+return {brShareCredentialsModal: factory};
 
 });

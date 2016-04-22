@@ -17,6 +17,7 @@ define([
   './credential-library-service',
   './credential-routes',
   './credential-service',
+  './credentials-action-menu-directive',
   './credentials-list-directive',
   './default-credential-displayer-directive',
   './edit-credential-modal-directive',
@@ -25,7 +26,8 @@ define([
   './login-directive',
   './logout-directive',
   './select-text-directive',
-  './share-credential-modal-directive'
+  './share-credential-modal-directive',
+  './share-credentials-modal-directive'
 ], function(
   angular,
   authenticationService,
@@ -36,6 +38,7 @@ define([
   credentialLibraryService,
   routes,
   credentialService,
+  credentialsActionMenuDirective,
   credentialsListDirective,
   defaultCredentialDisplayerDirective,
   editCredentialModalDirective,
@@ -44,7 +47,8 @@ define([
   loginDirective,
   logoutDirective,
   selectTextDirective,
-  shareCredentialModalDirective
+  shareCredentialModalDirective,
+  shareCredentialsModalDirective
 ) {
 
 'use strict';
@@ -66,6 +70,7 @@ module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
 module.directive(credentialActionMenuDirective);
+module.directive(credentialsActionMenuDirective);
 module.directive(credentialsListDirective);
 module.directive(defaultCredentialDisplayerDirective);
 module.directive(editCredentialModalDirective);
@@ -76,6 +81,7 @@ module.directive(loginDirective);
 module.directive(logoutDirective);
 module.directive(selectTextDirective);
 module.directive(shareCredentialModalDirective);
+module.directive(shareCredentialsModalDirective);
 module.directive(simpleCredentialDisplayerDirective);
 
 /* @ngInject */

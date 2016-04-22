@@ -11,7 +11,7 @@ define(['angular', 'jsonld'], function(angular, jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brCredentialService) {
+function factory($location, brAlertService, brCredentialService) {
   return {
     restrict: 'E',
     scope: {
@@ -30,6 +30,8 @@ function factory(brAlertService, brCredentialService) {
       credentials: {loading: true}
     };
 
+    // FIXME: generate share url from identity
+    model.credentialsShareUrl = $location.absUrl();
     scope.$watch('identity', function(identity) {
       brCredentialService.setIdentity(identity);
       _credentialTypeUpdated(scope.credentialType);
