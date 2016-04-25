@@ -159,7 +159,8 @@ function factory(
         if(!('identity' in session) && self.credential.sysIsPublic) {
           // display a public credential to a non-authenticated user
           _display('credentialInfo');
-        } else if('CREDENTIAL_ADMIN' in session.identity.sysPermissionTable) {
+        } else if('sysPermissionTable' in session.identity &&
+          'CREDENTIAL_ADMIN' in session.identity.sysPermissionTable) {
           // an admin is logged in, just show the credential
           _display('credentialInfo');
         } else if(self.credential.claim.id === session.identity.id) {
