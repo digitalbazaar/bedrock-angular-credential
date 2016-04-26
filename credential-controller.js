@@ -177,6 +177,8 @@ function factory(
           _display('credentialInfo');
         }
       }).catch(function(err) {
+        // FIXME difficult to see error dispaly due to logout below
+        console.error(err);
         if('type' in err && err.type === 'NotFound' &&
           'identity' in session) {
           err.message =
