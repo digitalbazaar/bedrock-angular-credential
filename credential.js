@@ -12,11 +12,11 @@ define([
   './authentication-service',
   './simple-credential-displayer-directive',
   './credential-action-menu-directive',
-  './credential-controller',
   './credential-directive',
   './credential-library-service',
   './credential-routes',
   './credential-service',
+  './credential-viewer-component',
   './credentials-action-menu-directive',
   './credentials-list-directive',
   './default-credential-displayer-directive',
@@ -33,11 +33,11 @@ define([
   authenticationService,
   simpleCredentialDisplayerDirective,
   credentialActionMenuDirective,
-  credentialController,
   credentialDirective,
   credentialLibraryService,
   routes,
   credentialService,
+  credentialViewerComponent,
   credentialsActionMenuDirective,
   credentialsListDirective,
   defaultCredentialDisplayerDirective,
@@ -64,8 +64,8 @@ var module = angular.module(
 // viewing notifications of unclaimed credentials or done as part of another
 // module?
 
+credentialViewerComponent(module);
 module.service(authenticationService);
-module.controller(credentialController);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);

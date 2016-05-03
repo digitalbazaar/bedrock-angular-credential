@@ -1,17 +1,25 @@
 /*!
- * Credential Controller.
- *
  * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
- *
- * @author Dave Longley
- * @author David I. Lehn
  */
 define(['jsonld'], function(jsonld) {
 
 'use strict';
 
+function register(module) {
+  module.component('brCredentialViewer', {
+    bindings: {
+    },
+    controller: Ctrl,
+    templateUrl: requirejs.toUrl(
+      'bedrock-angular-credential/credential-viewer-component.html'),
+    transclude: {
+      'modal-slot': "?brCredentialViewerModalSlot"
+    }
+  });
+}
+
 /* @ngInject */
-function factory(
+function Ctrl(
   $scope, brAlertService, brRefreshService, brCredentialService,
   brSessionService, brAuthenticationService, config) {
   var self = this;
@@ -206,6 +214,6 @@ function factory(
   }
 }
 
-return {brCredentialController: factory};
+return register;
 
 });
