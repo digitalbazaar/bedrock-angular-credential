@@ -13,14 +13,15 @@ function register(module) {
     templateUrl: requirejs.toUrl(
       'bedrock-angular-credential/credential-viewer-component.html'),
     transclude: {
-      'modal-slot': "?brCredentialViewerModalSlot"
+      'modal-slot': "?brCredentialViewerModalSlot",
+      'actionMenu': "?brActionMenu"
     }
   });
 }
 
 /* @ngInject */
 function Ctrl(
-  $scope, brAlertService, brRefreshService, brCredentialService,
+  $scope, $transclude, brAlertService, brRefreshService, brCredentialService,
   brSessionService, brAuthenticationService, config) {
   var self = this;
   self.state = brCredentialService.state;
@@ -147,6 +148,10 @@ function Ctrl(
 
   self.encodeUrl = function(url) {
     return encodeURIComponent(url);
+  };
+
+  self.isTranscludeSlotFilled = function(slot) {
+    return $transclude.isSlotFilled(slot);
   };
 
   function init() {
