@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 1.1.1 - 2016-05-27
+
+### Changed
+- Update deps.
+
 ## 1.1.0 - 2016-05-27
 
 ### Added
