@@ -8,20 +8,20 @@ define(['jsonld'], function(jsonld) {
 function register(module) {
   module.component('brCredentialViewer', {
     bindings: {
+      onInit: '&?brOnInit'
     },
     controller: Ctrl,
     templateUrl: requirejs.toUrl(
       'bedrock-angular-credential/credential-viewer-component.html'),
     transclude: {
-      'modal-slot': "?brCredentialViewerModalSlot",
-      'actionMenu': "?brActionMenu"
+      'actionMenu': '?brCredentialViewerActionMenu'
     }
   });
 }
 
 /* @ngInject */
 function Ctrl(
-  $scope, $transclude, brAlertService, brRefreshService, brCredentialService,
+  $scope, $transclude, brAlertService, brCredentialService,
   brSessionService, brAuthenticationService, config) {
   var self = this;
   self.state = brCredentialService.state;
@@ -48,6 +48,13 @@ function Ctrl(
     self.altUpdateEndpoint =
       config.data.baseUri + config.data['angular-credential'].altUpdateEndpoint;
   }
+
+  self.$onInit = function() {
+    if(typeof self.onInit === 'function') {
+      // expose controller
+      self.onInit({controller: self});
+    }
+  };
 
   init();
 

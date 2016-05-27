@@ -1,7 +1,7 @@
 /*!
  * Credential module.
  *
- * Copyright (c) 2012-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2012-2016 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
@@ -11,7 +11,7 @@ define([
   'angular',
   './authentication-service',
   './simple-credential-displayer-directive',
-  './credential-action-menu-directive',
+  './credential-action-menu-component',
   './credential-directive',
   './credential-library-service',
   './credential-routes',
@@ -32,7 +32,7 @@ define([
   angular,
   authenticationService,
   simpleCredentialDisplayerDirective,
-  credentialActionMenuDirective,
+  credentialActionMenuComponent,
   credentialDirective,
   credentialLibraryService,
   routes,
@@ -65,11 +65,11 @@ var module = angular.module(
 // module?
 
 credentialViewerComponent(module);
+credentialActionMenuComponent(module);
 module.service(authenticationService);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
-module.directive(credentialActionMenuDirective);
 module.directive(credentialsActionMenuDirective);
 module.directive(credentialsListDirective);
 module.directive(defaultCredentialDisplayerDirective);
