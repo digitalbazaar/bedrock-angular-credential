@@ -1,5 +1,16 @@
 # bedrock-angular-credential ChangeLog
 
+## [Unreleased]
+
+## [2.0.0] - 2016-05-28
+
+### Added
+- **BREAKING**: Allow credential viewer action menu to be replaced
+  via transclusion and expose credential viewer controller via
+  `br-on-init` attribute. This is considered breaking because it
+  changes the way that the action menu can be overridden and
+  previous overrides will no longer work.
+
 ## 1.1.1 - 2016-05-27
 
 ### Changed

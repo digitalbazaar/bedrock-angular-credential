@@ -1,6 +1,6 @@
 {
   "name": "bedrock-angular-credential",
-  "version": "1.1.2-dev",
+  "version": "2.0.0",
   "main": "./credential.js",
   "moduleType": [
     "amd"
