@@ -1,8 +1,11 @@
 # bedrock-angular-credential ChangeLog
 
-## [Unreleased]
+## 2.0.1 - 2016-05-30
 
-## [2.0.0] - 2016-05-28
+### Fixed
+- Recreate credentials-action-menu-directive.js.
+
+## 2.0.0 - 2016-05-28
 
 ### Added
 - **BREAKING**: Allow credential viewer action menu to be replaced
