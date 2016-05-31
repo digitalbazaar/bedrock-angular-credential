@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.0.2 - 2016-05-31
+
+### Changed
+- Change method of displaying links for unclaimed credentials.
+
 ## 2.0.1 - 2016-05-30
 
 ### Fixed
