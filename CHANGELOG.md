@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.0.3 - 2016-06-22
+
+### Fixed
+- Display error on credential storage failure.
+
 ## 2.0.2 - 2016-05-31
 
 ### Changed
