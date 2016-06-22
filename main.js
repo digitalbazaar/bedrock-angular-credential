@@ -22,7 +22,7 @@ define([
   './default-credential-displayer-directive',
   './edit-credential-modal-directive',
   './export-credential-modal-directive',
-  './accept-credential-directive',
+  './accept-credential-component',
   './login-directive',
   './logout-directive',
   './select-text-directive',
@@ -43,7 +43,7 @@ define([
   defaultCredentialDisplayerDirective,
   editCredentialModalDirective,
   exportCredentialModalDirective,
-  acceptCredentialDirective,
+  acceptCredentialComponent,
   loginDirective,
   logoutDirective,
   selectTextDirective,
@@ -64,6 +64,7 @@ var module = angular.module(
 // viewing notifications of unclaimed credentials or done as part of another
 // module?
 
+acceptCredentialComponent(module);
 credentialViewerComponent(module);
 credentialActionMenuComponent(module);
 module.service(authenticationService);
@@ -76,7 +77,6 @@ module.directive(defaultCredentialDisplayerDirective);
 module.directive(editCredentialModalDirective);
 module.directive(exportCredentialModalDirective);
 // TODO: alphabetize
-module.directive(acceptCredentialDirective);
 module.directive(loginDirective);
 module.directive(logoutDirective);
 module.directive(selectTextDirective);

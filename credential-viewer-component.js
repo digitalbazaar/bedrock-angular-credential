@@ -84,7 +84,7 @@ function Ctrl(
     }
   });
 
-  self.acceptCallback = function(err, identity) {
+  self.acceptComplete = function(err, identity) {
     var updateRequest;
     var credentialServiceOptions = {};
     if(err) {
