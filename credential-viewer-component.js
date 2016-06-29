@@ -141,13 +141,20 @@ function Ctrl(
   };
 
   self.confirmDeleteCredential = function(err, result) {
+    var credentialServiceOptions = {};
+    if(!compareHost(self.credential.id)) {
+      credentialServiceOptions.url = self.altUpdateEndpoint + '?id=' +
+        encodeURIComponent(self.credential.id);
+    }
     if(!err && result === 'ok') {
       self.credential.deleted = true;
-      // wait to delete so modal can transition
-      brCredentialService.collection.del(self.credential.id, {delay: 400})
+      brCredentialService.collection
+        .del(self.credential.id, credentialServiceOptions)
         .catch(function(err) {
           brAlertService.add('error', err, {scope: $scope});
           self.credential.deleted = false;
+        })
+        .then(function() {
           $scope.$apply();
         });
     }
