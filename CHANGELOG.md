@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.0.4 - 2016-06-29
+
+### Fixed
+- Credential deletion.
+
 ## 2.0.3 - 2016-06-22
 
 ### Fixed
