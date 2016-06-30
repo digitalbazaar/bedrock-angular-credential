@@ -21,7 +21,7 @@ function register(module) {
 
 /* @ngInject */
 function Ctrl(
-  $scope, $transclude, brAlertService, brCredentialService,
+  $scope, $route, $transclude, brAlertService, brCredentialService,
   brSessionService, brAuthenticationService, config) {
   var self = this;
   self.state = brCredentialService.state;
@@ -137,7 +137,7 @@ function Ctrl(
   };
 
   self.afterLogin = function(err, identity) {
-    init();
+    $route.reload();
   };
 
   self.confirmDeleteCredential = function(err, result) {
