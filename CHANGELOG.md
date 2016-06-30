@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.0.5 - 2016-06-30
+
+### Changed
+- Do $route.reload() after login.
+
 ## 2.0.4 - 2016-06-29
 
 ### Fixed
