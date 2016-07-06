@@ -1,5 +1,7 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.1.0 - 2016-07-06
+
 ### Removed
 - Remove context-specific credential data display.
 
