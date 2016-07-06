@@ -71,17 +71,6 @@ function Ctrl(
       self.credentialShareUrl = credential.id;
     }
     self.allPublic = jsonld.hasValue(self.credential, 'sysPublic', '*');
-    if(self.credential.sysDisplayContext) {
-      jsonld.promises.compact(
-        self.credential, self.credential.sysDisplayContext)
-        .then(function(compacted) {
-          self.compacted = compacted;
-        }).catch(function(err) {
-          brAlertService.add('error', err, {scope: $scope});
-        }).then(function() {
-          $scope.$apply();
-        });
-    }
   });
 
   self.acceptComplete = function(err, identity) {
