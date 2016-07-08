@@ -188,8 +188,10 @@ function Ctrl(
             self.allowEdit = true;
             _display('credentialInfo');
           }
-        } else if(self.credential.issuer === session.identity.id) {
-          // the issuer is logged in, just show the credential
+        } else if(self.credential.issuer === session.identity.id ||
+          self.credential.sysIsPublic) {
+          // the issuer is logged in OR display a public credential to an
+          // authenticated user that is not the owner, issuer or an admin
           _display('credentialInfo');
         }
       }).catch(function(err) {
