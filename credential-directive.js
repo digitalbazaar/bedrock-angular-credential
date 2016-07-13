@@ -103,9 +103,19 @@ function factory(
         return brCredentialLibraryService.getLibrary(library)
           .then(function(library) {
             model.library = library;
-            // pick out groups that match credential types
+            // get credential types
             var types = _.flatten(jsonld.getValues(credential, 'type'));
-            return _.values(_.pick(library.groups, types));
+            // for each type find PropertyGroups
+            return _.reduce(types, function(result, value) {
+              // find displayers for this type
+              var displayers = _.filter(library.displayers, {
+                displayerFor: value
+              });
+              // get groups
+              var groups = _.map(displayers, 'propertyGroup');
+              // combine results
+              return _.concat(result, groups);
+            }, []);
           }).catch(function(err) {
             brAlertService.add('error', err, {scope: scope});
           });
