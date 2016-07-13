@@ -16,6 +16,7 @@ function factory(brCredentialService) {
     restrict: 'E',
     scope: {
       model: '=brModel',
+      library: '<?brLibrary',
       options: '=brOptions'
     },
     templateUrl: requirejs.toUrl(

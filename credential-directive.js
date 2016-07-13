@@ -73,12 +73,14 @@ function factory(
                 '<' + 'br-simple-credential-displayer' +
                 ' br-model="model.compacted"' +
                 ' br-groups="model.groups"' +
+                ' br-library="model.library"' +
                 ' br-options="' + 'options' + '"></' +
                 'br-simple-credential-displayer>';
             } else {
               template =
                 '<' + displayer.directive +
                 ' br-model="model"' +
+                ' br-library="model.library"' +
                 ' br-options="{editable: false}"></' +
                 displayer.directive + '>';
             }
@@ -100,6 +102,7 @@ function factory(
       if(library || !groups) {
         return brCredentialLibraryService.getLibrary(library)
           .then(function(library) {
+            model.library = library;
             // pick out groups that match credential types
             var types = _.flatten(jsonld.getValues(credential, 'type'));
             return _.values(_.pick(library.groups, types));
