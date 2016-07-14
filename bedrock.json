@@ -1,4 +1,7 @@
 {
-  "config": "./bedrock/config.js",
+  "config": [
+    "./bedrock/config.js",
+    "./test/config.js"
+  ],
   "dependencies": {}
 }
