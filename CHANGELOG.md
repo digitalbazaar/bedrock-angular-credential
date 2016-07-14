@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.1.1 - 2016-07-14
+
+### Fixed
+- Display a public credential to an identity without elevated permissions.
+
 ## 2.1.0 - 2016-07-06
 
 ### Removed
