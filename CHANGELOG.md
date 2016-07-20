@@ -1,5 +1,11 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.1.2 - 2016-07-20
+
+### Changed
+- Support library parameter.
+- Update to use Displayer data to map credential type to displayer type.
+
 ## 2.1.1 - 2016-07-14
 
 ### Fixed
