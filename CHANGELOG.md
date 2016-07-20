@@ -1,6 +1,6 @@
 # bedrock-angular-credential ChangeLog
 
-## 2.1.2 - 2016-07-20
+## 2.2.0 - 2016-07-20
 
 ### Changed
 - Support library parameter.
