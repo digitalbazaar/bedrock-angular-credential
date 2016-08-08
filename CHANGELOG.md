@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.2.1 - 2016-08-08
+
+### Fixed
+- Credential share URL.
+
 ## 2.2.0 - 2016-07-20
 
 ### Changed
