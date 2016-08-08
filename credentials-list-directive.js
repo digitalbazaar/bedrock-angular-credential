@@ -11,7 +11,7 @@ define(['angular', 'jsonld'], function(angular, jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory($location, brAlertService, brCredentialService, config) {
+function factory(brAlertService, brCredentialService, config) {
   return {
     restrict: 'E',
     scope: {
