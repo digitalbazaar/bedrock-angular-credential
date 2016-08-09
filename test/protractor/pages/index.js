@@ -1,7 +1,12 @@
+/*!
+ * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ */
+
 var pages = global.bedrock.pages || {};
 
-pages.credential = pages.credential || {};
-pages.credential.credentialViewer = require('./credential');
-pages.credential.credentialList = require('./credential-list');
+pages['bedrock-angular-credential'] = {};
+pages['bedrock-angular-credential'].credentialViewer = require('./credential');
+pages['bedrock-angular-credential'].credentialList =
+  require('./credential-list');
 
 module.exports = global.bedrock.pages = pages;
