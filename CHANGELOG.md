@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.2.2 - 2016-08-11
+
+### Fixed
+- Build credential share URL from bedrock-identity config.
+
 ## 2.2.1 - 2016-08-08
 
 ### Fixed
