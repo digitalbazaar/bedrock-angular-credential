@@ -30,7 +30,8 @@ function factory(brAlertService, brCredentialService, config) {
       credentials: {loading: true}
     };
 
-    model.credentialsShareUrl =  config.data.idp.identityBaseUri + '/' +
+    model.credentialsShareUrl =
+      config.data.baseUri + config.data.identity.baseUri + '/' +
       encodeURI(scope.identity.sysSlug);
     scope.$watch('identity', function(identity) {
       brCredentialService.setIdentity(identity);
