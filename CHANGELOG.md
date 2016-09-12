@@ -1,5 +1,7 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.2.3 - 2016-09-12
+
 ### Fixed
 - Fix generation of credentials sharing URL.
 
