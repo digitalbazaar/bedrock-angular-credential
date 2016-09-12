@@ -32,4 +32,10 @@ module.exports = function(bedrock) {
   } else {
     vars['bedrock-angular-credential'].credentialsBasePath = '';
   }
+  if('identity-http' in bedrock.config) {
+    vars['bedrock-angular-credential'].identityBasePath =
+      bedrock.config['identity-http'].basePath || '';
+  } else {
+    vars['bedrock-angular-credential'].identityBasePath = '';
+  }
 };

@@ -11,7 +11,7 @@ define(['angular', 'jsonld'], function(angular, jsonld) {
 'use strict';
 
 /* @ngInject */
-function factory(brAlertService, brCredentialService, config) {
+function factory($location, brAlertService, brCredentialService, config) {
   return {
     restrict: 'E',
     scope: {
@@ -30,9 +30,17 @@ function factory(brAlertService, brCredentialService, config) {
       credentials: {loading: true}
     };
 
-    model.credentialsShareUrl =
-      config.data.baseUri + config.data.identity.baseUri + '/' +
-      encodeURI(scope.identity.sysSlug);
+    if(scope.identity.sysSlug) {
+      // enough info available to generate URL
+      model.credentialsShareUrl =
+        config.data.baseUri +
+        config.data['bedrock-angular-credential'].identityBasePath + '/' +
+        encodeURI(scope.identity.sysSlug);
+    } else {
+      // default to location
+      // FIXME: this requires the component be used at a proper identity URL
+      model.credentialsShareUrl = config.data.baseUri + $location.url();
+    }
     scope.$watch('identity', function(identity) {
       brCredentialService.setIdentity(identity);
       _credentialTypeUpdated(scope.credentialType);
