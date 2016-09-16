@@ -1,5 +1,7 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.2.4 - 2016-09-16
+
 ### Fixed
 - Do not call `scope.callback` twice in login directive on error.
 
