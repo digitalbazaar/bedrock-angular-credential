@@ -26,6 +26,7 @@ function factory(brAuthenticationService, config) {
     model.aioBaseUri = config.data['authorization-io'].baseUri;
 
     model.login = function() {
+      var err_ = null;
       var identity_;
       navigator.credentials.get({
         query: {
@@ -43,9 +44,9 @@ function factory(brAuthenticationService, config) {
       }).then(function(identity) {
         identity_ = identity;
       }).catch(function(err) {
-        scope.callback({err: err});
+        err_ = err;
       }).then(function() {
-        scope.callback({err: null, identity: identity_});
+        scope.callback({err: err_, identity: identity_});
       });
     };
   }
