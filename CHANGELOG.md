@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.2.5 - 2016-10-25
+
+### Changed
+- Add protractor pages.
+
 ## 2.2.4 - 2016-09-16
 
 ### Fixed
