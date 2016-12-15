@@ -8,7 +8,8 @@ define(['jsonld'], function(jsonld) {
 function register(module) {
   module.component('brCredentialViewer', {
     bindings: {
-      onInit: '&?brOnInit'
+      onInit: '&?brOnInit',
+      onDelete: '&?brOnDelete'
     },
     controller: Ctrl,
     templateUrl: requirejs.toUrl(
@@ -145,6 +146,11 @@ function Ctrl(
         })
         .then(function() {
           $scope.$apply();
+        })
+        .then(function() {
+          if(self.credential.deleted && self.onDelete) {
+            self.onDelete();
+          }
         });
     }
   };
