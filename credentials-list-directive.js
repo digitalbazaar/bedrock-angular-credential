@@ -16,7 +16,9 @@ function factory($location, brAlertService, brCredentialService, config) {
     restrict: 'E',
     scope: {
       credentialType: '@brCredentialType',
-      identity: '=brIdentity'
+      identity: '<brIdentity',
+      showHeadline: '<?brShowHeadline',
+      showPublicIndicator: '<?brShowPublicIndicator'
     },
     templateUrl: requirejs.toUrl(
       'bedrock-angular-credential/credentials-list.html'),
@@ -29,6 +31,8 @@ function factory($location, brAlertService, brCredentialService, config) {
     model.state = {
       credentials: {loading: true}
     };
+    model.showHeadline = scope.showHeadline !== false;
+    model.showPublicIndicator = scope.showPublicIndicator !== false;
 
     if(scope.identity.sysSlug) {
       // enough info available to generate URL
