@@ -1,5 +1,11 @@
 # bedrock-angular-credential ChangeLog
 
+## 2.3.0 - 2017-01-05
+
+### Added
+- Add `onDelete` handler to credential viewer.
+- Add optional attributes to credentials list to hide UI elements.
+
 ## 2.2.5 - 2016-10-25
 
 ### Changed
