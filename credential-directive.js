@@ -74,15 +74,17 @@ function factory(
                 ' br-model="model.compacted"' +
                 ' br-groups="model.groups"' +
                 ' br-library="model.library"' +
-                ' br-options="' + 'options' + '"></' +
+                ' br-options="options"></' +
                 'br-simple-credential-displayer>';
             } else {
               template =
                 '<' + displayer.directive +
                 ' br-model="model"' +
                 ' br-library="model.library"' +
-                ' br-options="{editable: false}"></' +
-                displayer.directive + '>';
+                ' br-options="{' +
+                '  editable: false, ' +
+                '  displayer: options.displayer || {}' +
+                '}"></' + displayer.directive + '>';
             }
             model.credentialView = $compile(template)(scope);
             element.prepend(model.credentialView);

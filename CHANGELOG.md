@@ -1,5 +1,8 @@
 # bedrock-angular-credential ChangeLog
 
+### Added
+- Pass `displayer` options to custom displayers.
+
 ## 2.3.0 - 2017-01-05
 
 ### Added
