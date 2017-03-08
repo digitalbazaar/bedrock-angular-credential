@@ -3,6 +3,13 @@
 ### Changed
 - Fix modal transclusion.
 
+### Removed
+- The Data section in the main display was out of place and removed.
+
+### Added
+- Adding an Info menu option and modal. At the moment this just shows the
+  credential JSON.
+
 ## 2.4.0 - 2017-01-18
 
 ### Added

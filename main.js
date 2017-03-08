@@ -13,6 +13,7 @@ define([
   './simple-credential-displayer-directive',
   './credential-action-menu-component',
   './credential-directive',
+  './credential-info-modal-directive',
   './credential-library-service',
   './credential-routes',
   './credential-service',
@@ -34,6 +35,7 @@ define([
   simpleCredentialDisplayerDirective,
   credentialActionMenuComponent,
   credentialDirective,
+  credentialInfoModalDirective,
   credentialLibraryService,
   routes,
   credentialService,
@@ -71,6 +73,7 @@ module.service(authenticationService);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
+module.directive(credentialInfoModalDirective);
 module.directive(credentialsActionMenuDirective);
 module.directive(credentialsListDirective);
 module.directive(defaultCredentialDisplayerDirective);
