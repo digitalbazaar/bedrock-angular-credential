@@ -1,5 +1,8 @@
 # bedrock-angular-credential ChangeLog
 
+### Changed
+- Fix modal transclusion.
+
 ## 2.4.0 - 2017-01-18
 
 ### Added
