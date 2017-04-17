@@ -13,7 +13,7 @@ define([
   './simple-credential-displayer-directive',
   './credential-action-menu-component',
   './credential-directive',
-  './credential-info-modal-directive',
+  './credential-info-modal-component',
   './credential-library-service',
   './credential-routes',
   './credential-service',
@@ -35,7 +35,7 @@ define([
   simpleCredentialDisplayerDirective,
   credentialActionMenuComponent,
   credentialDirective,
-  credentialInfoModalDirective,
+  credentialInfoModalComponent,
   credentialLibraryService,
   routes,
   credentialService,
@@ -69,11 +69,11 @@ var module = angular.module(
 acceptCredentialComponent(module);
 credentialViewerComponent(module);
 credentialActionMenuComponent(module);
+credentialInfoModalComponent(module);
 module.service(authenticationService);
 module.directive(credentialDirective);
 module.service(credentialLibraryService);
 module.service(credentialService);
-module.directive(credentialInfoModalDirective);
 module.directive(credentialsActionMenuDirective);
 module.directive(credentialsListDirective);
 module.directive(defaultCredentialDisplayerDirective);
