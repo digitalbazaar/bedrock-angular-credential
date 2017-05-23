@@ -1,12 +1,8 @@
 /*!
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2016-2017 Digital Bazaar, Inc. All rights reserved.
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory($timeout) {
+export default function factory($timeout) {
   return {
     restrict: 'A',
     scope: {
@@ -28,7 +24,3 @@ function factory($timeout) {
     });
   }
 }
-
-return {brSelectText: factory};
-
-});

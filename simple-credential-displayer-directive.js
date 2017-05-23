@@ -13,16 +13,14 @@
  * hideTitle: a flag that hides the credential's title, used if you only want
  *   to display credential properties
  *
- * Copyright (c) 2015-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Alex Lamar
  */
-define(['jsonld'], function(jsonld) {
-
-'use strict';
+import jsonld from 'jsonld';
 
 /* @ngInject */
-function factory() {
+export default function factory() {
   return {
     restrict: 'E',
     scope: {
@@ -30,8 +28,7 @@ function factory() {
       groups: '=brGroups',
       options: '=brOptions'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/simple-credential-displayer.html'),
+    templateUrl: 'bedrock-angular-credential/simple-credential-displayer.html',
     link: Link
   };
 
@@ -54,7 +51,7 @@ function factory() {
 
     model.expandProperties = function() {
       if(scope.options && !scope.options.collapsable) {
-        // Don't allow collapsable behavior if it isn't specified through options
+        // Don't allow collapsable behavior if not specified through options
         return;
       }
 
@@ -144,7 +141,3 @@ function factory() {
     }
   }
 }
-
-return {brSimpleCredentialDisplayer: factory};
-
-});

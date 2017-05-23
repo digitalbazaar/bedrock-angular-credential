@@ -1,23 +1,18 @@
 /*!
  * Login directive.
  *
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Matthew Collier
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory(brAuthenticationService, config) {
+export default function factory(brAuthenticationService, config) {
   return {
     restrict: 'E',
     scope: {
       callback: '&brLoginCallback'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/login.html'),
+    templateUrl: 'bedrock-angular-credential/login.html',
     link: Link
   };
 
@@ -51,7 +46,3 @@ function factory(brAuthenticationService, config) {
     };
   }
 }
-
-return {brLogin: factory};
-
-});

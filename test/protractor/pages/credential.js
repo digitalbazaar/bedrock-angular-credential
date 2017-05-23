@@ -1,18 +1,11 @@
 /*!
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2016-2017 Digital Bazaar, Inc. All rights reserved.
  */
-/* jshint -W030 */
-
 var bedrock = global.bedrock;
 
 var api = {};
 module.exports = api;
 
-var by = global.by;
-var element = global.element;
-var should = global.should;
-var expect = global.expect;
-var protractor = global.protractor;
 var EC = protractor.ExpectedConditions;
 
 api.COMPONENT_TAG = 'br-credential-viewer';

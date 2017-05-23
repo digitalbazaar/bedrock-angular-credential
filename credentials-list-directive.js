@@ -1,17 +1,17 @@
 /*!
  * Credentials directive.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  * @author Dave Longley
  */
-define(['angular', 'jsonld'], function(angular, jsonld) {
-
-'use strict';
+import angular from 'angular';
+import jsonld from 'jsonld';
 
 /* @ngInject */
-function factory($location, brAlertService, brCredentialService, config) {
+export default function factory(
+  $location, brAlertService, brCredentialService, config) {
   return {
     restrict: 'E',
     scope: {
@@ -20,8 +20,7 @@ function factory($location, brAlertService, brCredentialService, config) {
       showHeadline: '<?brShowHeadline',
       showPublicIndicator: '<?brShowPublicIndicator'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/credentials-list.html'),
+    templateUrl: 'bedrock-angular-credential/credentials-list.html',
     link: Link
   };
 
@@ -128,7 +127,3 @@ function factory($location, brAlertService, brCredentialService, config) {
     }
   }
 }
-
-return {brCredentials: factory};
-
-});

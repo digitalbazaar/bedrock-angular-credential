@@ -1,16 +1,16 @@
 /*!
  * Credential Service.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define(['jsonld', 'lodash'], function(jsonld, _) {
-
-'use strict';
+import jsonld from 'jsonld';
+import _ from 'lodash';
 
 /* @ngInject */
-function factory($rootScope, brRefreshService, brResourceService, config) {
+export default function factory(
+  $rootScope, brRefreshService, brResourceService, config) {
   var service = {};
   // storage for different collections
   service.collections = {};
@@ -45,22 +45,19 @@ function factory($rootScope, brRefreshService, brResourceService, config) {
 
     // credentials claimed by current identity
     service.collections.claimed = new brResourceService.Collection({
-      url:
-        service.credentialsBasePath + '?filter=claimed&recipient=' +
+      url: service.credentialsBasePath + '?filter=claimed&recipient=' +
         encodeURIComponent(service.identity.id)
     });
 
     // credentials issued by current identity
     service.collections.issued = new brResourceService.Collection({
-      url:
-        service.credentialsBasePath + '?issuer=' +
+      url: service.credentialsBasePath + '?issuer=' +
         encodeURIComponent(service.identity.id)
     });
 
     // unclaimed credentials where current identity is the recipient
     service.collections.unclaimed = new brResourceService.Collection({
-      url:
-        service.credentialsBasePath + '?filter=unclaimed&recipient=' +
+      url: service.credentialsBasePath + '?filter=unclaimed&recipient=' +
         encodeURIComponent(service.identity.id)
     });
 
@@ -97,7 +94,7 @@ function factory($rootScope, brRefreshService, brResourceService, config) {
     // TODO: register and find displayers using priority
     // Possibly use displayer 'q' param like Accept?
     // May want to be able to override
-    types = _.reject(types, function(type) { return type === 'Credential'; });
+    types = _.reject(types, function(type) {return type === 'Credential';});
     // FIXME: can only handle single type
     if(types.length !== 1) {
       console.warn('Displaying using first type:', types);
@@ -111,7 +108,3 @@ function factory($rootScope, brRefreshService, brResourceService, config) {
 
   return service;
 }
-
-return {brCredentialService: factory};
-
-});

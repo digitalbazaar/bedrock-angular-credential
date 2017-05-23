@@ -1,18 +1,14 @@
 /*!
  * Credential library service.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
  * @author Matt Collier
  */
-define(['angular'], function(angular) {
-
-'use strict';
-
 /* @ngInject */
-function factory(brFormLibraryService, config) {
+export default function factory(brFormLibraryService, config) {
   var service = {};
   service.libraries = {};
   service.CONTEXT = brFormLibraryService._CONTEXT;
@@ -92,7 +88,3 @@ function factory(brFormLibraryService, config) {
 
   return service;
 }
-
-return {brCredentialLibraryService: factory};
-
-});

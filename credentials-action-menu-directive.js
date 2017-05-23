@@ -1,19 +1,10 @@
 /*!
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2016-2017 Digital Bazaar, Inc. All rights reserved.
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory() {
+export default function factory() {
   return {
     restrict: 'E',
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/credentials-action-menu.html')
+    templateUrl: 'bedrock-angular-credential/credentials-action-menu.html'
   };
 }
-
-return {brCredentialsActionMenu: factory};
-
-});

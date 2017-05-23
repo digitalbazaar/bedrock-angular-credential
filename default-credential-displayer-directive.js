@@ -1,17 +1,13 @@
 /*!
  * Default Credential displayer directive.
  *
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory(brCredentialService) {
+export default function factory() {
   return {
     restrict: 'E',
     scope: {
@@ -19,11 +15,6 @@ function factory(brCredentialService) {
       library: '<?brLibrary',
       options: '=brOptions'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/default-credential-displayer.html')
+    templateUrl: 'bedrock-angular-credential/default-credential-displayer.html'
   };
 }
-
-return {brDefaultCredentialDisplayer: factory};
-
-});

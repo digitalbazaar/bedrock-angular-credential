@@ -1,24 +1,20 @@
 /*!
  * Export Credential Modal.
  *
- * Copyright (c) 2014-2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  * @author David I. Lehn
  */
-define(['angular', 'jsonld'],
-function(angular, jsonld) {
-
-'use strict';
+import angular from 'angular';
 
 /* @ngInject */
-function factory($http, brAlertService) {
+export default function factory() {
   return {
     restrict: 'E',
     scope: {credential: '=brCredential'},
     require: '^stackable',
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/export-credential-modal.html'),
+    templateUrl: 'bedrock-angular-credential/export-credential-modal.html',
     link: Link
   };
 
@@ -62,7 +58,3 @@ function factory($http, brAlertService) {
     };
   }
 }
-
-return {brExportCredentialModal: factory};
-
-});

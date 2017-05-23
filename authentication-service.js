@@ -1,16 +1,12 @@
 /*!
  * Authentication Service.
  *
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory($http, brSessionService) {
+export default function factory($http, brSessionService) {
   var service = {};
 
   /**
@@ -73,7 +69,3 @@ function factory($http, brSessionService) {
 
   return service;
 }
-
-return {brAuthenticationService: factory};
-
-});

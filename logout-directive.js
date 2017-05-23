@@ -1,24 +1,21 @@
 /*!
  * Logout directive.
  *
- * Copyright (c) 2015 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Matthew Collier
  */
-define(['angular'], function(angular) {
-
-'use strict';
+import angular from 'angular';
 
 /* @ngInject */
-function factory(
+export default function factory(
   $location, brAlertService, brAuthenticationService, brSessionService) {
   return {
     restrict: 'E',
     scope: {
       callback: '&?brLogoutCallback'
     },
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/logout.html'),
+    templateUrl: 'bedrock-angular-credential/logout.html',
     link: Link
   };
 
@@ -51,7 +48,3 @@ function factory(
     };
   }
 }
-
-return {brLogout: factory};
-
-});

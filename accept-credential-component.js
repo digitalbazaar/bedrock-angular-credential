@@ -1,25 +1,18 @@
 /*!
  * Accept Credential directive.
  *
- * Copyright (c) 2015-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2015-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
-function register(module) {
-  module.component('brAcceptCredential', {
-    bindings: {
-      onComplete: '&brOnComplete',
-      credential: '<brCredential'
-    },
-    controller: Ctrl,
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/accept-credential-component.html')
-  });
-}
+export default {
+  bindings: {
+    onComplete: '&brOnComplete',
+    credential: '<brCredential'
+  },
+  controller: Ctrl,
+  templateUrl: 'bedrock-angular-credential/accept-credential-component.html'
+};
 
 /* @ngInject */
 function Ctrl($scope, brAlertService, config) {
@@ -33,11 +26,9 @@ function Ctrl($scope, brAlertService, config) {
       self.identity = {
         '@context': 'https://w3id.org/identity/v1',
         id: credential.claim.id,
-        credential: [
-          {
-            '@graph': credential
-          }
-        ]
+        credential: [{
+          '@graph': credential
+        }]
       };
     }
   });
@@ -52,8 +43,10 @@ function Ctrl($scope, brAlertService, config) {
       }
       // the authio window was closed or cancelled
       brAlertService.add(
-        'error', 'The credential was not properly stored.  Please try again.',
-        {scope: $scope});
+        'error',
+        'The credential was not properly stored.  Please try again.',
+        {scope: $scope}
+      );
     }).catch(function(err) {
       self.onComplete({err: err});
     }).then(function() {
@@ -65,7 +58,3 @@ function Ctrl($scope, brAlertService, config) {
     self.onComplete({err: null, identity: null});
   };
 }
-
-return register;
-
-});

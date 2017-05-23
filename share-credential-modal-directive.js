@@ -1,22 +1,17 @@
 /*!
  * Share Credential Modal.
  *
- * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2016-2017 Digital Bazaar, Inc. All rights reserved.
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory() {
+export default function factory() {
   return {
     restrict: 'E',
     scope: {
       shareUrl: '=brShareUrl'
     },
     require: '^stackable',
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/share-credential-modal.html'),
+    templateUrl: 'bedrock-angular-credential/share-credential-modal.html',
     link: Link
   };
 
@@ -24,7 +19,3 @@ function factory() {
     var model = scope.model = {};
   }
 }
-
-return {brShareCredentialModal: factory};
-
-});

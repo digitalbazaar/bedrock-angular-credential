@@ -1,24 +1,19 @@
 /*!
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  */
-define(['jsonld'], function(jsonld) {
+import jsonld from 'jsonld';
 
-'use strict';
-
-function register(module) {
-  module.component('brCredentialViewer', {
-    bindings: {
-      onInit: '&?brOnInit',
-      onDelete: '&?brOnDelete'
-    },
-    controller: Ctrl,
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/credential-viewer-component.html'),
-    transclude: {
-      'actionMenu': '?brCredentialViewerActionMenu'
-    }
-  });
-}
+export default {
+  bindings: {
+    onInit: '&?brOnInit',
+    onDelete: '&?brOnDelete'
+  },
+  controller: Ctrl,
+  templateUrl: 'bedrock-angular-credential/credential-viewer-component.html',
+  transclude: {
+    'actionMenu': '?brCredentialViewerActionMenu'
+  }
+};
 
 /* @ngInject */
 function Ctrl(
@@ -59,7 +54,7 @@ function Ctrl(
 
   init();
 
-  $scope.$watch(function() { return self.credential; }, function(credential) {
+  $scope.$watch(function() {return self.credential;}, function(credential) {
     if(!credential) {
       return;
     }
@@ -95,7 +90,7 @@ function Ctrl(
       }
       brCredentialService.collection.update(
         updateRequest, credentialServiceOptions)
-        .then(function(result) {
+        .then(function() {
           _display('rejected');
         }).catch(function(err) {
           brAlertService.add('error', err, {scope: $scope});
@@ -117,7 +112,7 @@ function Ctrl(
     }
     brCredentialService.collection.update(
       updateRequest, credentialServiceOptions)
-      .then(function(result) {
+      .then(function() {
         _display('acknowledgement');
       }).catch(function(err) {
         brAlertService.add('error', err, {scope: $scope});
@@ -126,7 +121,7 @@ function Ctrl(
       });
   };
 
-  self.afterLogin = function(err, identity) {
+  self.afterLogin = function() {
     $route.reload();
   };
 
@@ -229,7 +224,3 @@ function Ctrl(
     return url.indexOf(config.data.baseUri) === 0;
   }
 }
-
-return register;
-
-});

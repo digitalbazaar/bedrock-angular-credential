@@ -1,0 +1,26 @@
+{
+  "name": "bedrock-angular-credential",
+  "version": "2.5.0",
+  "description": "A bedrock AngularJS module that provides credential display support.",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "~1.6.4",
+    "bedrock-angular-alert": "^3.0.0",
+    "bedrock-angular-form": "^3.0.0",
+    "bedrock-angular-resource": "^3.0.0",
+    "bedrock-angular-session": "^4.0.0",
+    "lodash": "^4.1.0",
+    "jsonld": "~0.4.6"
+  },
+  "bedrock": {
+    "browserDependencies": "all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalbazaar/bedrock-angular-credential.git"
+  },
+  "bugs": {
+    "url": "https://github.com/digitalbazaar/bedrock-angular-credential/issues"
+  },
+  "homepage": "https://github.com/digitalbazaar/bedrock-angular-credential#readme"
+}

@@ -1,17 +1,13 @@
 /*!
  * Edit Credential Modal.
  *
- * Copyright (c) 2014-2016 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2014-2017 Digital Bazaar, Inc. All rights reserved.
  *
  * @author David I. Lehn
  * @author Dave Longley
  */
-define([], function() {
-
-'use strict';
-
 /* @ngInject */
-function factory(brAlertService, brCredentialService) {
+export default function factory(brAlertService, brCredentialService) {
   return {
     restrict: 'E',
     scope: {
@@ -19,8 +15,7 @@ function factory(brAlertService, brCredentialService) {
       updateUrl: '=brUpdateUrl'
     },
     require: '^stackable',
-    templateUrl: requirejs.toUrl(
-      'bedrock-angular-credential/edit-credential-modal.html'),
+    templateUrl: 'bedrock-angular-credential/edit-credential-modal.html',
     link: Link
   };
 
@@ -58,7 +53,3 @@ function factory(brAlertService, brCredentialService) {
     };
   }
 }
-
-return {brEditCredentialModal: factory};
-
-});
