@@ -1,6 +1,6 @@
 {
   "name": "bedrock-angular-credential",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "A bedrock AngularJS module that provides credential display support.",
   "main": "index.js",
   "dependencies": {
