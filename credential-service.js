@@ -103,8 +103,5 @@ export default function factory(
       service.displayers.byId['default'];
   };
 
-  // expose service to scope
-  $rootScope.app.services.credential = service;
-
   return service;
 }
