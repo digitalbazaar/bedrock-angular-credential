@@ -1,5 +1,10 @@
 # bedrock-angular-credential ChangeLog
 
+## 3.0.2 - 2017-06-22
+
+### Fixed
+- Remove unused route definition.
+
 ## 3.0.1 - 2017-05-31
 
 ### Fixed
