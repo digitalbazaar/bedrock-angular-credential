@@ -16,7 +16,6 @@ import CredentialActionMenuComponent from
 import CredentialDirective from './credential-directive.js';
 import CredentialInfoModalComponent from './credential-info-modal-component.js';
 import CredentialLibraryService from './credential-library-service.js';
-import routes from './credential-routes';
 import CredentialService from './credential-service.js';
 import CredentialViewerComponent from './credential-viewer-component.js';
 import CredentialsActionMenuDirective from
@@ -70,13 +69,6 @@ module.directive('brShareCredentialModal', ShareCredentialModalDirective);
 module.directive('brShareCredentialsModal', ShareCredentialsModalDirective);
 module.directive('brSimpleCredentialDisplayer',
   SimpleCredentialDisplayerDirective);
-
-/* @ngInject */
-module.config(function($routeProvider) {
-  angular.forEach(routes, function(route) {
-    $routeProvider.when(route.path, route.options);
-  });
-});
 
 /* @ngInject */
 module.run(function(brCredentialService) {
