@@ -4,13 +4,13 @@
   "description": "A bedrock AngularJS module that provides credential display support.",
   "main": "index.js",
   "dependencies": {
-    "angular": "~1.6.4",
-    "bedrock-angular-alert": "digitalbazaar/bedrock-angular-alert#material",
-    "bedrock-angular-form": "digitalbazaar/bedrock-angular-form#material-only",
+    "bedrock-angular": "^4.0.0",
+    "bedrock-angular-alert": "^4.0.0",
+    "bedrock-angular-form": "^4.0.0",
     "bedrock-angular-resource": "^3.0.0",
-    "bedrock-angular-session": "^4.0.0",
+    "bedrock-angular-session": "^5.0.0",
     "lodash": "^4.1.0",
-    "jsonld": "~0.4.6"
+    "jsonld": "^1.0.0"
   },
   "bedrock": {
     "browserDependencies": "all"
