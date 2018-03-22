@@ -1,5 +1,7 @@
 # bedrock-angular-credential ChangeLog
 
+## 4.0.0 - 2018-03-21
+
 ### Changed
 - **BREAKING**: Switch to material design.
 
